@@ -18,12 +18,12 @@ export default class Event extends BaseEntity {
 
   @IsString()
   @MinLength(2)
-  @Column("text")
+  @Column("text", { nullable: false })
   name: string;
 
   @IsString()
   @MinLength(2)
-  @Column("text")
+  @Column("text", { nullable: true })
   description: string;
 
   @IsString()

@@ -10,6 +10,7 @@ import { MinLength, IsString, IsEmail } from "class-validator";
 import * as bcrypt from "bcrypt";
 import Event from "../events/entity";
 import Ticket from "../tickets/entity";
+import Comment from "../comments/entity";
 
 @Entity()
 export default class User extends BaseEntity {
@@ -51,4 +52,7 @@ export default class User extends BaseEntity {
 
   @OneToMany(_ => Ticket, ticket => ticket.user)
   ticket: Ticket;
+
+  @OneToMany(_ => Comment, comment => comment.user)
+  comment: Comment;
 }

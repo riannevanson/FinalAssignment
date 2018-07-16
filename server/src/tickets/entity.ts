@@ -3,12 +3,14 @@ import {
   Entity,
   PrimaryGeneratedColumn,
   Column,
-  ManyToOne
+  ManyToOne,
+  OneToMany
 } from "typeorm";
 import Event from "../events/entity";
 
-import { MinLength, IsString } from "class-validator";
+import { MinLength, IsString, IsOptional } from "class-validator";
 import User from "../users/entity";
+import Comment from "../comments/entity";
 
 @Entity()
 export default class Ticket extends BaseEntity {
@@ -30,4 +32,16 @@ export default class Ticket extends BaseEntity {
 
   @ManyToOne(_ => User, user => user.event)
   user: User;
+
+  @OneToMany(_ => Comment, comment => comment.ticket)
+  comment: Comment;
+
+  @IsOptional()
+  @IsString()
+  @Column("timestamp", {
+    precision: 3,
+    default: () => "CURRENT_TIMESTAMP",
+    nullable: false
+  })
+  timestamp: Date;
 }
