@@ -1,20 +1,20 @@
 import React, { PureComponent } from "react";
 
 import { connect } from "react-redux";
-import { fetchAllEvents, createEvent } from "../../actions/events";
+import { fetchAllTickets, createTicket } from "../../actions/tickets";
 import { Link } from "react-router-dom";
-import EventForm from "./EventForm";
+import TicketForm from "./TicketForm";
 
-class EventsList extends PureComponent {
+class TicketsList extends PureComponent {
   componentWillMount() {
-    this.props.fetchAllEvents();
+    this.props.fetchAllTickets();
   }
-  createNewEvent = event => {
-    this.props.createEvent(event);
+  createNewTicket = ticket => {
+    this.props.createTicket(ticket);
   };
 
   render() {
-    const { events } = this.props;
+    const { tickets } = this.props;
     return (
       <div>
         <p>Welcome</p>
@@ -26,7 +26,7 @@ class EventsList extends PureComponent {
         )}
 
         <p>
-          <h1>All events</h1>
+          <h1>All tickets</h1>
 
           <table>
             <thead>
@@ -37,21 +37,21 @@ class EventsList extends PureComponent {
               </tr>
             </thead>
             <tbody>
-              {events.map(event => (
-                <tr key={event.id}>
-                  <td>{event.id}</td>
+              {tickets.map(ticket => (
+                <tr key={ticket.id}>
+                  <td>{ticket.id}</td>
                   <td>
-                    <Link to={`/events/${event.id}`}>{event.name}</Link>
+                    <Link to={`/tickets/${ticket.id}`}>{ticket.name}</Link>
                   </td>
 
-                  <td>{event.pictureUrl}</td>
+                  <td>{ticket.pictureUrl}</td>
                 </tr>
               ))}
             </tbody>
           </table>
-          <h1>Create a new event</h1>
+          <h1>Create a new ticket</h1>
 
-          <EventForm onSubmit={this.createNewEvent} />
+          <TicketForm onSubmit={this.createNewTicket} />
         </p>
       </div>
     );
@@ -60,7 +60,7 @@ class EventsList extends PureComponent {
 
 const mapStateToProps = function(state) {
   return {
-    events: state.events,
+    tickets: state.tickets,
     currentUser: state.currentUser
   };
 };
@@ -68,7 +68,7 @@ const mapStateToProps = function(state) {
 export default connect(
   mapStateToProps,
   {
-    fetchAllEvents,
-    createEvent
+    fetchAllTickets,
+    createTicket
   }
-)(EventsList);
+)(TicketsList);

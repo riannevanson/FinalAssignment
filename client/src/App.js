@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Route, Redirect } from "react-router-dom";
 import LoginPage from "./components/login/LoginPage";
 import SignupPage from "./components/signup/SignupPage";
 import EventsList from "./components/events/EventsList";
-// import EventsDetails from './components/games/EventsDetails'
+import EventDetails from "./components/events/EventDetails";
 import LogoutPage from "./components/logout/LogoutPage";
 import "./App.css";
 import TopBar from "./components/layout/TopBar";
@@ -25,7 +25,7 @@ class App extends Component {
             <Route exact path="/logout" component={LogoutPage} />
             <Route exact path="/signup" component={SignupPage} />
             <Route exact path="/events" component={EventsList} />
-            {/* <Route exact path="/events/:id" component={GameDetails} /> */}
+            <Route exact path="/events/:id" component={EventDetails} />
             <Route exact path="/" render={() => <Redirect to="/events" />} />
           </main>
         </div>
