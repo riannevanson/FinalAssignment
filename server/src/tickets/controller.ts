@@ -7,24 +7,33 @@ import {
   Body,
   Put,
   NotFoundError,
-  Authorized
+  Authorized,
+  CurrentUser
 } from "routing-controllers";
 import Ticket from "./entity";
+// import User from "../users/entity";
+import Event from "../events/entity";
 
 @JsonController()
 export default class TicketController {
-  @Get("/tickets/:id")
+  @Get("/events/:eventId/tickets/:id")
   getTicket(@Param("id") id: number) {
     return Ticket.findOneById(id);
   }
 
-  @Get("/events/:eventId/tickets")
-  async allTickets(@Param("eventId") eventId: number) {
-    const tickets = await Ticket.find({
-      relations: ["event"]
-    });
-    if (!tickets) throw new NotFoundError("Cannot find tickets for event");
+  // @Get("/events/:eventId/tickets")
+  // async allTickets(@Param("eventId") eventId: number) {
+  //   const tickets = await Ticket.find({
+  //     relations: ["event"]
+  //   });
+  //   if (!tickets) throw new NotFoundError("Cannot find tickets for event");
 
+  //   return { tickets };
+  // }
+
+  @Get("/events/:eventId/tickets")
+  async allTickets() {
+    const tickets = await Ticket.find({ relations: ["event", "user"] });
     return { tickets };
   }
 
@@ -38,20 +47,33 @@ export default class TicketController {
   }
 
   @Authorized()
-  @Post("/events/:eventId/tickets/:ticketId/:userId")
-  // @Post('/tickets')
+  @Post("/events/:eventId/tickets")
   @HttpCode(201)
-  createTicket(
-    @Param("eventId") eventId: number,
-    @Param("userId") userId: number,
-    // @Param("ticketId") ticketId: number,
-    @Body() ticket: Ticket
+  async createEvent(
+    @Body() ticket: Ticket,
+    @CurrentUser() user: number,
+    @Param("eventId") eventId: number
   ) {
-    console.log(userId);
-    ticket.event = Number(eventId);
-    ticket.user = Number(userId);
-    console.log(ticket);
-
+    ticket.user = user;
+    ticket.event = await Event.findOneById(eventId);
     return ticket.save();
   }
+
+  // @Authorized()
+  // @Post("/events/:eventId/tickets/:ticketId/:userId")
+  // // @Post('/tickets')
+  // @HttpCode(201)
+  // createTicket(
+  //   @Param("eventId") eventId: number,
+  //   @Param("userId") userId: number,
+  //   // @Param("ticketId") ticketId: number,
+  //   @Body() ticket: Ticket
+  // ) {
+  //   console.log(userId);
+  //   ticket.event = Number(eventId);
+  //   ticket.user = Number(userId);
+  //   console.log(ticket);
+
+  //   return ticket.save();
+  // }
 }

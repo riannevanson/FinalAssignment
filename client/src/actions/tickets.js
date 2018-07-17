@@ -57,6 +57,7 @@ export const fetchAllTickets = () => dispatch => {
 export const createTicket = (ticket, eventId) => (dispatch, getState) => {
   const state = getState();
   const jwt = state.currentUser.jwt;
+  console.log(eventId, "eventId in action");
 
   request
     .post(`${baseUrl}/events/${eventId}/tickets`)

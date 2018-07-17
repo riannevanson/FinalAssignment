@@ -5,7 +5,7 @@ class TicketForm extends PureComponent {
 
   handleSubmit = e => {
     e.preventDefault();
-    this.props.onSubmit(this.state);
+    this.props.onSubmit(this.state, 2);
   };
 
   handleChange = ticket => {

@@ -15,13 +15,16 @@ class TicketsList extends PureComponent {
     this.props.fetchAllTicketsFromEventId(this.props.match.params.id);
     this.props.fetchEvent(this.props.match.params.id);
   }
-  createNewTicket = ticket => {
-    this.props.createTicket(ticket);
+  createNewTicket = (ticket, eventId) => {
+    this.props.createTicket(ticket, eventId);
   };
 
   render() {
     const { tickets, event } = this.props;
-    let eventTickets = tickets.filter(ticket => ticket.event.id === event.id);
+    console.log(event.id);
+    let eventTickets = tickets.filter(
+      ticket => ticket.event !== undefined && ticket.event.id === event.id
+    );
     return (
       <div>
         <p>Welcome</p>
@@ -63,7 +66,7 @@ class TicketsList extends PureComponent {
           </table>
           <h1>Create a new ticket</h1>
 
-          <TicketForm onSubmit={this.createNewTicket} />
+          <TicketForm event={event.id} onSubmit={this.createNewTicket} />
         </div>
       </div>
     );
