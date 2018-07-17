@@ -4,7 +4,7 @@ class TicketForm extends PureComponent {
   state = {};
 
   handleSubmit = e => {
-    e.prticketDefault();
+    e.preventDefault();
     this.props.onSubmit(this.state);
   };
 
@@ -63,28 +63,14 @@ class TicketForm extends PureComponent {
         </div>
 
         <div>
-          <label htmlFor="startDate">startDate</label>
+          <label htmlFor="price">price</label>
           <input
-            name="startDate"
-            id="startDate"
+            name="price"
+            id="price"
             value={
-              this.state.startDate !== undefined
-                ? this.state.startDate
-                : initialValues.startDate
-            }
-            onChange={this.handleChange}
-          />
-        </div>
-
-        <div>
-          <label htmlFor="endDate">endDate</label>
-          <input
-            name="endDate"
-            id="endDate"
-            value={
-              this.state.endDate !== undefined
-                ? this.state.endDate
-                : initialValues.endDate
+              this.state.price !== undefined
+                ? this.state.price
+                : initialValues.price
             }
             onChange={this.handleChange}
           />

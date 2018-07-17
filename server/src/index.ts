@@ -5,6 +5,7 @@ import UserController from "./users/controller";
 import LoginController from "./logins/controller";
 //import GameController from './games/controller'
 import EventController from "./events/controller";
+import TicketController from "./tickets/controller";
 import { verify } from "./jwt";
 import User from "./users/entity";
 import * as Koa from "koa";
@@ -20,7 +21,12 @@ const port = process.env.PORT || 4000;
 
 useKoaServer(app, {
   cors: true,
-  controllers: [UserController, LoginController, EventController],
+  controllers: [
+    UserController,
+    LoginController,
+    EventController,
+    TicketController
+  ],
   authorizationChecker: (action: Action) => {
     const header: string = action.request.headers.authorization;
     if (header && header.startsWith("Bearer ")) {

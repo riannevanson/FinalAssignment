@@ -13,19 +13,23 @@ import Ticket from "./entity";
 
 @JsonController()
 export default class TicketController {
-  @Get("/api/tickets/:id")
+  @Get("/tickets/:id")
   getTicket(@Param("id") id: number) {
     return Ticket.findOneById(id);
   }
 
-  @Get("/api/tickets")
-  async allTickets() {
-    const tickets = await Ticket.find();
+  @Get("/events/:eventId/tickets")
+  async allTickets(@Param("eventId") eventId: number) {
+    const tickets = await Ticket.find({
+      relations: ["event"]
+    });
+    if (!tickets) throw new NotFoundError("Cannot find tickets for event");
+
     return { tickets };
   }
 
   // @Authorized()
-  @Put("/api/tickets/:id")
+  @Put("/tickets/:id")
   async updateTicket(@Param("id") id: number, @Body() update: Partial<Ticket>) {
     const ticket = await Ticket.findOneById(id);
     if (!ticket) throw new NotFoundError("Cannot find ticket");
@@ -34,12 +38,13 @@ export default class TicketController {
   }
 
   @Authorized()
-  @Post("/api/events/:eventId/tickets/:userId")
-  // @Post('/api/tickets')
+  @Post("/events/:eventId/tickets/:ticketId/:userId")
+  // @Post('/tickets')
   @HttpCode(201)
   createTicket(
     @Param("eventId") eventId: number,
     @Param("userId") userId: number,
+    // @Param("ticketId") ticketId: number,
     @Body() ticket: Ticket
   ) {
     console.log(userId);

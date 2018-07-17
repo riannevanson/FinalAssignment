@@ -1,12 +1,14 @@
 import * as request from "superagent";
 
-const baseUrl = "http://localhost:4000";
+import { baseUrl } from "../constants";
 
 export const FETCHED_DETAILED_TICKET = "FETCHED_DETAILED_TICKET";
 export const FETCHED_ALL_TICKETS = "FETCHED_ALL_TICKETS";
 export const CREATE_TICKET = "CREATE_TICKET";
 export const REMOVE_TICKET = "REMOVE_TICKET";
 export const UPDATE_TICKET = "UPDATE_TICKET";
+export const FETCHED_ALL_TICKETS_FROM_EVENT_ID =
+  "FETCHED_ALL_TICKETS_FROM_EVENT_ID";
 
 export const fetchTicket = ticketId => dispatch => {
   request
@@ -18,6 +20,22 @@ export const fetchTicket = ticketId => dispatch => {
       })
     )
     .catch(err => alert(err));
+};
+
+export const fetchAllTicketsFromEventId = eventId => dispatch => {
+  request
+    .get(`${baseUrl}/events/${eventId}/tickets`)
+    .then(response =>
+      dispatch({
+        type: FETCHED_ALL_TICKETS_FROM_EVENT_ID,
+        payload: response.body.tickets
+      })
+    )
+    .catch(err => alert(err));
+
+  // ... implement!
+  // Hint: make sure to use json.tickets and not json as payload,
+  // because you send back an envelope! (so response.body.tickets)
 };
 
 export const fetchAllTickets = () => dispatch => {
@@ -36,12 +54,12 @@ export const fetchAllTickets = () => dispatch => {
   // because you send back an envelope! (so response.body.tickets)
 };
 
-export const createTicket = ticket => (dispatch, getState) => {
+export const createTicket = (ticket, eventId) => (dispatch, getState) => {
   const state = getState();
   const jwt = state.currentUser.jwt;
 
   request
-    .post(`${baseUrl}/tickets`)
+    .post(`${baseUrl}/events/${eventId}/tickets`)
     .set("Authorization", `Bearer ${jwt}`)
     .send(ticket)
     .then(response =>

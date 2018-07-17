@@ -18,6 +18,11 @@ export default class Ticket extends BaseEntity {
 
   @IsString()
   @MinLength(2)
+  @Column("text", { nullable: true })
+  name: string;
+
+  @IsString()
+  @MinLength(2)
   @Column("text")
   description: string;
 

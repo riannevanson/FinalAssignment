@@ -7,10 +7,12 @@ import {
   NotFoundError,
   Post,
   HttpCode,
-  Authorized
+  Authorized,
+  CurrentUser
 } from "routing-controllers";
 
 import Event from "./entity";
+import User from "../users/entity";
 
 @JsonController()
 export default class EventController {
@@ -33,11 +35,13 @@ export default class EventController {
 
     return Event.merge(event, update).save();
   }
+
   @Authorized()
   @Post("/events")
   @HttpCode(201)
-  createEvent(@Body() event: Event) {
-    return event.save();
+  async createEvent(@Body() event: Event, @CurrentUser() user: User) {
+    event.user = user;
+    return await event.save();
   }
 
   //   @Post("/events")

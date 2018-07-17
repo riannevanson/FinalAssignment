@@ -25,7 +25,7 @@ class EventsList extends PureComponent {
           </p>
         )}
 
-        <p>
+        <div>
           <h1>All events</h1>
 
           <table>
@@ -52,7 +52,7 @@ class EventsList extends PureComponent {
           <h1>Create a new event</h1>
 
           <EventForm onSubmit={this.createNewEvent} />
-        </p>
+        </div>
       </div>
     );
   }
