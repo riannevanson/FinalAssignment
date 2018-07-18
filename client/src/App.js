@@ -29,7 +29,11 @@ class App extends Component {
             <Route exact path="/events" component={EventsList} />
             <Route exact path="/events/:id" component={EventDetails} />
             <Route exact path="/events/:id/tickets" component={TicketsList} />
-            <Route exact path="/tickets/:id" component={TicketDetails} />
+            <Route
+              exact
+              path="/events/:id/tickets/:id"
+              component={TicketDetails}
+            />
             <Route exact path="/" render={() => <Redirect to="/events" />} />
           </main>
         </div>

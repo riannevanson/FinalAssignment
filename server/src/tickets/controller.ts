@@ -18,6 +18,8 @@ import Event from "../events/entity";
 export default class TicketController {
   @Get("/tickets/:id")
   async getTicket(@Param("id") id: number) {
+    // const ticket = await Ticket.find({ relations: ["event", "user"] });
+
     return Ticket.findOneById(id);
   }
 
