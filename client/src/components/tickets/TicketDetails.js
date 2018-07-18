@@ -33,7 +33,6 @@ class TicketDetails extends PureComponent {
 
   render() {
     const { ticket } = this.props;
-    console.log(ticket);
     if (!ticket) return null;
     return (
       <div>

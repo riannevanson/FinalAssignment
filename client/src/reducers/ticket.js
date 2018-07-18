@@ -4,7 +4,6 @@ import { UPDATE_TICKET } from "../actions/tickets";
 export default function(state = [], action) {
   switch (action.type) {
     case FETCHED_DETAILED_TICKET:
-      console.log("reducer is being fetched", action.payload);
       return action.payload;
     case UPDATE_TICKET:
       if (action.payload.id === state.id) {

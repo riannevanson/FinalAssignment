@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 
 class RiskCalculator extends PureComponent {
   render() {
-    const { products } = this.props;
+    //const { products } = this.props;
 
     const timeNow = Date.now();
 

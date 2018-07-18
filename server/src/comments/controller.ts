@@ -12,14 +12,14 @@ import Comment from "./entity";
 
 @JsonController()
 export default class CommentController {
-  @Get("/comments/:id")
+  @Get("/events/:eventId/tickets/:ticketsId/comments/:id")
   getComment(@Param("id") id: number) {
     return Comment.findOneById(id);
   } //returns a promise so it sais 'not found"
 
-  @Get("/comments")
+  @Get("/events/:eventId/tickets/:ticketsId/comments")
   async allComments() {
-    const comments = await Comment.find();
+    const comments = await Comment.find({ relations: ["ticket", "user"] });
     return { comments };
   }
 }

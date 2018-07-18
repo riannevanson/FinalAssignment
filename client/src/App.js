@@ -9,6 +9,7 @@ import "./App.css";
 import TopBar from "./components/layout/TopBar";
 import TicketsList from "./components/tickets/TicketsList";
 import TicketDetails from "./components/tickets/TicketDetails";
+import CommentsList from "./components/tickets/CommentsList";
 
 // <Route exact path="/signup" component={SignupPage} />
 // <Route exact path="/games" component={GamesList} />
@@ -35,6 +36,11 @@ class App extends Component {
               component={TicketDetails}
             />
             <Route exact path="/" render={() => <Redirect to="/events" />} />
+            <Route
+              exact
+              path="/events/:id/tickets/:id/:ticketid/comments"
+              component={CommentsList}
+            />
           </main>
         </div>
       </Router>
