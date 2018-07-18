@@ -6,7 +6,7 @@ import {
   ManyToOne
 } from "typeorm";
 
-import { MinLength, IsString } from "class-validator";
+import { MinLength, IsString, IsOptional } from "class-validator";
 import User from "../users/entity";
 import Ticket from "../tickets/entity";
 
@@ -16,18 +16,21 @@ export default class Comment extends BaseEntity {
 
   @IsString()
   @MinLength(2)
-  @Column("text")
-  description: string;
-
-  @Column("int") price: number;
-
-  @IsString()
   @Column("text", { nullable: true })
-  pictureUrl: string;
+  comment: string;
+
+  @IsOptional()
+  @IsString()
+  @Column("timestamp", {
+    precision: 2,
+    default: () => "CURRENT_TIMESTAMP",
+    nullable: false
+  })
+  timestamp: Date;
 
   @ManyToOne(_ => Ticket, ticket => ticket.comment)
-  ticket: Ticket;
+  ticket: number;
 
   @ManyToOne(_ => User, user => user.comment)
-  user: User;
+  user: number;
 }

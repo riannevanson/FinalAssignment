@@ -5,6 +5,7 @@ import { fetchTicket, updateTicket, deleteTicket } from "../../actions/tickets";
 import TicketForm from "./TicketForm";
 // import TicketsList from "./tickets/TicketsList";
 import CommentsList from "./CommentsList";
+import RiskCalculator from "./RiskCalculator";
 
 class TicketDetails extends PureComponent {
   state = {
@@ -52,6 +53,9 @@ class TicketDetails extends PureComponent {
         <br />
         <br /> <br />
         <CommentsList />
+        <br />
+        <br /> <br />
+        <RiskCalculator />
       </div>
     );
   }
