@@ -20,23 +20,10 @@ export default class TicketController {
   async getTicket(@Param("id") id: number) {
     // const ticket = await Ticket.find({ relations: ["event", "user"] });
 
-    return Ticket.findOneById(id);
+    return Ticket.findOneById(id, {
+      relations: ["user", "event", "comment"]
+    });
   }
-
-  // @Get("/events/:id")
-  // getEvent(@Param("id") id: number) {
-  //   return Event.findOneById(id);
-  // }
-
-  // @Get("/events/:eventId/tickets")
-  // async allTickets(@Param("eventId") eventId: number) {
-  //   const tickets = await Ticket.find({
-  //     relations: ["event"]
-  //   });
-  //   if (!tickets) throw new NotFoundError("Cannot find tickets for event");
-
-  //   return { tickets };
-  // }
 
   @Get("/events/:eventId/tickets")
   async allTickets() {

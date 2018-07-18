@@ -32,13 +32,13 @@ class App extends Component {
             <Route exact path="/events/:id/tickets" component={TicketsList} />
             <Route
               exact
-              path="/events/:id/tickets/:id"
+              path="/events/:id/tickets/:ticketId"
               component={TicketDetails}
             />
             <Route exact path="/" render={() => <Redirect to="/events" />} />
             <Route
               exact
-              path="/events/:id/tickets/:id/:ticketid/comments"
+              path="/tickets/:ticketId/comments"
               component={CommentsList}
             />
           </main>

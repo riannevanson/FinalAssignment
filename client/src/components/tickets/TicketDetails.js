@@ -13,7 +13,7 @@ class TicketDetails extends PureComponent {
   };
 
   componentWillMount(props) {
-    this.props.fetchTicket(this.props.match.params.id);
+    this.props.fetchTicket(this.props.match.params.ticketId);
   }
 
   toggleEdit = () => {
@@ -32,7 +32,7 @@ class TicketDetails extends PureComponent {
   };
 
   render() {
-    const { ticket } = this.props;
+    const { ticket, event } = this.props;
     if (!ticket) return null;
     return (
       <div>
@@ -45,16 +45,16 @@ class TicketDetails extends PureComponent {
             <p> {ticket.description}</p>
           </div>
         )}
-        <button onClick={() => this.toggleEdit(ticket.id)}>EDIT EVENT</button>
+        <button onClick={() => this.toggleEdit(ticket.id)}>Edit ticket</button>
         <button onClick={() => this.deleteThisTicket(ticket.id)}>
-          Remove product
+          Remove ticket
         </button>
         <br />
         <br /> <br />
         <CommentsList />
         <br />
         <br /> <br />
-        <RiskCalculator />
+        <RiskCalculator currentTicket={ticket} />
       </div>
     );
   }

@@ -20,11 +20,9 @@ class TicketsList extends PureComponent {
 
   render() {
     const { tickets, event } = this.props;
-    console.log(event, "event");
     let eventTickets = tickets.filter(
       ticket => ticket.event !== undefined && ticket.event.id === event.id
     );
-    console.log(eventTickets[0], "eventicket 3");
     return (
       <div>
         <p>Welcome</p>

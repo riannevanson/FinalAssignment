@@ -5,28 +5,24 @@ import {
   fetchAllCommentsFromTicketId,
   createComment
 } from "../../actions/comments";
-import {
-  fetchAllTicketsFromEventId,
-  createTicket
-} from "../../actions/tickets";
+import { fetchAllTicketsFromEventId, fetchTicket } from "../../actions/tickets";
 import { Link } from "react-router-dom";
 import CommentForm from "./CommentForm";
 import { fetchEvent, updateEvent, deleteEvent } from "../../actions/events";
 
 class CommentsList extends PureComponent {
   componentWillMount() {
-    //   this.props.fetchAllTicketsFromEventId(this.props.match.params.id);
-    // this.props.fetchAllCommentsFromTicketId(this.props.match.params.id);
+    this.props.fetchAllCommentsFromTicketId(this.props.ticket.id);
   }
-  createNewComment = (comment, eventId) => {
-    this.props.createComment(comment, eventId);
+
+  createNewComment = (comment, ticketId) => {
+    this.props.createComment(comment, ticketId);
   };
 
   render() {
-    const { comments, event } = this.props;
-    console.log(event, "event");
-    let eventComments = comments.filter(
-      comment => comment.event !== undefined && comment.event.id === event.id
+    const { comments, ticket } = this.props;
+    let ticketComments = comments.filter(
+      comment => comment.ticket !== undefined && comment.ticket.id === ticket.id
     );
 
     return (
@@ -39,8 +35,8 @@ class CommentsList extends PureComponent {
           </p>
         )}
         <div>
-          <h1>{event.name}</h1>
-          <p> {event.description}</p>
+          <h1>{ticket.name}</h1>
+          <p> {ticket.description}</p>
         </div>
         <div>
           <h1>All comments for this ticket</h1>
@@ -48,14 +44,14 @@ class CommentsList extends PureComponent {
           <table>
             <thead>
               <tr>
-                <th>#</th>
                 <th>user</th>
+                <th>comment</th>
               </tr>
             </thead>
             <tbody>
-              {eventComments.map(comment => (
+              {ticketComments.map(comment => (
                 <tr key={comment.id}>
-                  <td>{comment.id}</td>
+                  <td>{comment.user.email}</td>
                   <td>
                     <Link to={`comments/${comment.id}`}>{comment.comment}</Link>
                   </td>
@@ -65,7 +61,7 @@ class CommentsList extends PureComponent {
           </table>
           <h1>Create a new comment</h1>
 
-          <CommentForm onSubmit={this.createNewComment} event={event.id} />
+          <CommentForm onSubmit={this.createNewComment} ticket={ticket.id} />
         </div>
       </div>
     );
@@ -76,7 +72,7 @@ const mapStateToProps = function(state) {
   return {
     comments: state.comments,
     currentUser: state.currentUser,
-    event: state.event
+    ticket: state.ticket
   };
 };
 

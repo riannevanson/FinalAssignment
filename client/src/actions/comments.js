@@ -10,21 +10,21 @@ export const UPDATE_COMMENT = "UPDATE_COMMENT";
 export const FETCHED_ALL_COMMENTS_FROM_EVENT_ID =
   "FETCHED_ALL_COMMENTS_FROM_EVENT_ID";
 
-export const fetchComment = commentId => dispatch => {
-  request
-    .get(`${baseUrl}/comments/${commentId}`)
-    .then(response =>
-      dispatch({
-        type: FETCHED_DETAILED_COMMENT,
-        payload: response.body
-      })
-    )
-    .catch(err => alert(err));
-};
+// export const fetchComment = () => dispatch => {
+//   request
+//     .get(`${baseUrl}/tickets/${ticketId}/comments/${commentId}`)
+//     .then(response =>
+//       dispatch({
+//         type: FETCHED_DETAILED_COMMENT,
+//         payload: response.body
+//       })
+//     )
+//     .catch(err => alert(err));
+// };
 
-export const fetchAllCommentsFromTicketId = (eventId, ticketId) => dispatch => {
+export const fetchAllCommentsFromTicketId = ticketId => dispatch => {
   request
-    .get(`${baseUrl}/events/${eventId}/tickets/${ticketId}/comments`)
+    .get(`${baseUrl}/tickets/${ticketId}/comments`)
     .then(response =>
       dispatch({
         type: FETCHED_ALL_COMMENTS_FROM_EVENT_ID,

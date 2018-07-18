@@ -21,9 +21,25 @@ export default class EventController {
     return Event.findOneById(id);
   }
 
+  @Get("/events/skip/:skip")
+  async nineEvents(@Param("skip") skip: number) {
+    const events = await Event.find({
+      order: {
+        id: "ASC"
+      },
+      skip: skip,
+      take: 9
+    });
+    return { events };
+  }
+
   @Get("/events")
   async allEvents() {
-    const events = await Event.find();
+    const events = await Event.find({
+      order: {
+        id: "ASC"
+      }
+    });
     return { events };
   }
 
