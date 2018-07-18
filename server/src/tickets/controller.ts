@@ -16,10 +16,15 @@ import Event from "../events/entity";
 
 @JsonController()
 export default class TicketController {
-  @Get("/events/:eventId/tickets/:id")
-  getTicket(@Param("id") id: number) {
+  @Get("/tickets/:id")
+  async getTicket(@Param("id") id: number) {
     return Ticket.findOneById(id);
   }
+
+  // @Get("/events/:id")
+  // getEvent(@Param("id") id: number) {
+  //   return Event.findOneById(id);
+  // }
 
   // @Get("/events/:eventId/tickets")
   // async allTickets(@Param("eventId") eventId: number) {
@@ -54,8 +59,11 @@ export default class TicketController {
     @CurrentUser() user: number,
     @Param("eventId") eventId: number
   ) {
+    const event = await Event.findOneById(eventId);
+    if (!event) throw new NotFoundError("Cannot find event");
     ticket.user = user;
-    ticket.event = await Event.findOneById(eventId);
+    ticket.event = event;
+
     return ticket.save();
   }
 

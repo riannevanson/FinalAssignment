@@ -1,11 +1,12 @@
-import { FETCHED_DETAILED_EVENT } from "../actions/events";
-import { UPDATE_EVENT } from "../actions/events";
+import { FETCHED_DETAILED_TICKET } from "../actions/tickets";
+import { UPDATE_TICKET } from "../actions/tickets";
 
 export default function(state = [], action) {
   switch (action.type) {
-    case FETCHED_DETAILED_EVENT:
+    case FETCHED_DETAILED_TICKET:
+      console.log("reducer is being fetched", action.payload);
       return action.payload;
-    case UPDATE_EVENT:
+    case UPDATE_TICKET:
       if (action.payload.id === state.id) {
         return action.payload;
       } else return state;

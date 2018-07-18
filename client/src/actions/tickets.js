@@ -38,21 +38,21 @@ export const fetchAllTicketsFromEventId = eventId => dispatch => {
   // because you send back an envelope! (so response.body.tickets)
 };
 
-export const fetchAllTickets = () => dispatch => {
-  request
-    .get(`${baseUrl}/tickets`)
-    .then(response =>
-      dispatch({
-        type: FETCHED_ALL_TICKETS,
-        payload: response.body.tickets
-      })
-    )
-    .catch(err => alert(err));
+// export const fetchAllTickets = () => dispatch => {
+//   request
+//     .get(`${baseUrl}/tickets`)
+//     .then(response =>
+//       dispatch({
+//         type: FETCHED_ALL_TICKETS,
+//         payload: response.body.tickets
+//       })
+//     )
+//     .catch(err => alert(err));
 
-  // ... implement!
-  // Hint: make sure to use json.tickets and not json as payload,
-  // because you send back an envelope! (so response.body.tickets)
-};
+//   // ... implement!
+//   // Hint: make sure to use json.tickets and not json as payload,
+//   // because you send back an envelope! (so response.body.tickets)
+// };
 
 export const createTicket = (ticket, eventId) => (dispatch, getState) => {
   const state = getState();

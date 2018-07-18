@@ -39,7 +39,7 @@ class EventDetails extends PureComponent {
         )}
         {!this.state.edit && (
           <div>
-            <h1>{event.name}</h1>
+            <h1>{event.name}</h1>'hi i am an event'
             <p> {event.description}</p>
           </div>
         )}

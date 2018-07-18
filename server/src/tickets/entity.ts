@@ -33,7 +33,7 @@ export default class Ticket extends BaseEntity {
   pictureUrl: string;
 
   @ManyToOne(_ => Event, event => event.ticket)
-  event: number;
+  event: Event;
 
   @ManyToOne(_ => User, user => user.event)
   user: number;

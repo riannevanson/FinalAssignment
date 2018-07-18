@@ -31,6 +31,7 @@ class TicketForm extends PureComponent {
                 : initialValues.name
             }
             onChange={this.handleChange}
+            type="text"
           />
         </div>
 
@@ -45,6 +46,7 @@ class TicketForm extends PureComponent {
                 : initialValues.pictureUrl
             }
             onChange={this.handleChange}
+            type="text"
           />
         </div>
 
@@ -59,6 +61,7 @@ class TicketForm extends PureComponent {
                 : initialValues.description
             }
             onChange={this.handleChange}
+            type="text"
           />
         </div>
 
@@ -73,6 +76,7 @@ class TicketForm extends PureComponent {
                 : initialValues.price
             }
             onChange={this.handleChange}
+            type="integer"
           />
         </div>
 

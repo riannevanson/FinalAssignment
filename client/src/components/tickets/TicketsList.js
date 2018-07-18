@@ -3,7 +3,6 @@ import React, { PureComponent } from "react";
 import { connect } from "react-redux";
 import {
   fetchAllTicketsFromEventId,
-  fetchAllTickets,
   createTicket
 } from "../../actions/tickets";
 import { Link } from "react-router-dom";
@@ -21,10 +20,11 @@ class TicketsList extends PureComponent {
 
   render() {
     const { tickets, event } = this.props;
-    console.log(event.id);
+    console.log(event, "event");
     let eventTickets = tickets.filter(
       ticket => ticket.event !== undefined && ticket.event.id === event.id
     );
+    console.log(eventTickets[0], "eventicket 3");
     return (
       <div>
         <p>Welcome</p>
@@ -54,9 +54,7 @@ class TicketsList extends PureComponent {
                 <tr key={ticket.id}>
                   <td>{ticket.id}</td>
                   <td>
-                    <Link to={`/events/${event.id}/tickets/${ticket.id}`}>
-                      {ticket.name}
-                    </Link>
+                    <Link to={`/tickets/${ticket.id}`}>{ticket.name}</Link>
                   </td>
 
                   <td>{ticket.pictureUrl}</td>
@@ -66,7 +64,7 @@ class TicketsList extends PureComponent {
           </table>
           <h1>Create a new ticket</h1>
 
-          <TicketForm event={event.id} onSubmit={this.createNewTicket} />
+          <TicketForm onSubmit={this.createNewTicket} />
         </div>
       </div>
     );
@@ -84,7 +82,7 @@ const mapStateToProps = function(state) {
 export default connect(
   mapStateToProps,
   {
-    fetchAllTickets,
+    // fetchAllTickets,
     createTicket,
     fetchEvent,
     updateEvent,

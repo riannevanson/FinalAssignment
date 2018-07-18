@@ -3,6 +3,7 @@ import React, { PureComponent } from "react";
 import { connect } from "react-redux";
 import { fetchTicket, updateTicket, deleteTicket } from "../../actions/tickets";
 import TicketForm from "./TicketForm";
+// import TicketsList from "./tickets/TicketsList";
 
 class TicketDetails extends PureComponent {
   state = {
@@ -30,25 +31,24 @@ class TicketDetails extends PureComponent {
 
   render() {
     const { ticket } = this.props;
+    console.log(ticket);
     if (!ticket) return null;
     return (
       <div>
         {this.state.edit && (
           <TicketForm initialValues={ticket} onSubmit={this.updateTicket} />
         )}
-
         {!this.state.edit && (
           <div>
-            <h1>{ticket.name}</h1>
+            <h1>{ticket.name}</h1>'hi i am an ticket'
             <p> {ticket.description}</p>
           </div>
         )}
-
-        <button>Buy this ticket</button>
         <button onClick={() => this.toggleEdit(ticket.id)}>EDIT EVENT</button>
         <button onClick={() => this.deleteThisTicket(ticket.id)}>
           Remove product
         </button>
+        {/* <TicketsList /> */}
       </div>
     );
   }
