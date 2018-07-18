@@ -39,7 +39,7 @@ class TicketsList extends PureComponent {
           <p> {event.description}</p>
         </div>
         <div>
-          <h1>All tickets</h1>
+          <h1>All tickets for this event</h1>
 
           <table>
             <thead>
@@ -54,9 +54,7 @@ class TicketsList extends PureComponent {
                 <tr key={ticket.id}>
                   <td>{ticket.id}</td>
                   <td>
-                    <Link to={`events/${ticket.event.Id}/tickets/${ticket.id}`}>
-                      {ticket.name}
-                    </Link>
+                    <Link to={`tickets/${ticket.id}`}>{ticket.name}</Link>
                   </td>
 
                   <td>{ticket.pictureUrl}</td>
@@ -66,7 +64,7 @@ class TicketsList extends PureComponent {
           </table>
           <h1>Create a new ticket</h1>
 
-          <TicketForm onSubmit={this.createNewTicket} />
+          <TicketForm onSubmit={this.createNewTicket} event={event.id} />
         </div>
       </div>
     );

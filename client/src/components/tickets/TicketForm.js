@@ -5,7 +5,8 @@ class TicketForm extends PureComponent {
 
   handleSubmit = e => {
     e.preventDefault();
-    this.props.onSubmit(this.state, 2);
+    this.props.onSubmit(this.state, this.props.event);
+    // console.log(this.props.event, "event in form");
   };
 
   handleChange = ticket => {
@@ -18,6 +19,7 @@ class TicketForm extends PureComponent {
 
   render() {
     const initialValues = this.props.initialValues || {};
+
     return (
       <form onSubmit={this.handleSubmit}>
         <div>

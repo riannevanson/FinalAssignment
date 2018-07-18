@@ -4,6 +4,7 @@ import { connect } from "react-redux";
 import { fetchTicket, updateTicket, deleteTicket } from "../../actions/tickets";
 import TicketForm from "./TicketForm";
 // import TicketsList from "./tickets/TicketsList";
+import CommentsList from "./CommentsList";
 
 class TicketDetails extends PureComponent {
   state = {
@@ -48,7 +49,9 @@ class TicketDetails extends PureComponent {
         <button onClick={() => this.deleteThisTicket(ticket.id)}>
           Remove product
         </button>
-        {/* <TicketsList /> */}
+        <br />
+        <br /> <br />
+        <CommentsList />
       </div>
     );
   }
