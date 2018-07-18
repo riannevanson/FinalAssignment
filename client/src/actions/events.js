@@ -1,6 +1,6 @@
 import * as request from "superagent";
 
-import { baseUrl } from "../constants";
+const baseUrl = "http://localhost:4000";
 
 export const FETCHED_DETAILED_EVENT = "FETCHED_DETAILED_EVENT";
 export const FETCHED_ALL_EVENTS = "FETCHED_ALL_EVENTS";

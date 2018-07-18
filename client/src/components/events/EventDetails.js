@@ -3,7 +3,6 @@ import React, { PureComponent } from "react";
 import { connect } from "react-redux";
 import { fetchEvent, updateEvent, deleteEvent } from "../../actions/events";
 import EventForm from "./EventForm";
-// import TicketsList from "./tickets/TicketsList";
 
 class EventDetails extends PureComponent {
   state = {
@@ -37,17 +36,19 @@ class EventDetails extends PureComponent {
         {this.state.edit && (
           <EventForm initialValues={event} onSubmit={this.updateEvent} />
         )}
+
         {!this.state.edit && (
           <div>
-            <h1>{event.name}</h1>'hi i am an event'
+            <h1>{event.name}</h1>
             <p> {event.description}</p>
           </div>
         )}
+
+        <button>Buy this event</button>
         <button onClick={() => this.toggleEdit(event.id)}>EDIT EVENT</button>
         <button onClick={() => this.deleteThisEvent(event.id)}>
           Remove product
         </button>
-        {/* <TicketsList /> */}
       </div>
     );
   }

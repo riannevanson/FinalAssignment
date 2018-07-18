@@ -3,9 +3,6 @@ import React, { PureComponent } from "react";
 import { connect } from "react-redux";
 import { fetchTicket, updateTicket, deleteTicket } from "../../actions/tickets";
 import TicketForm from "./TicketForm";
-// import TicketsList from "./tickets/TicketsList";
-import CommentsList from "./CommentsList";
-import RiskCalculator from "./RiskCalculator";
 
 class TicketDetails extends PureComponent {
   state = {
@@ -39,22 +36,19 @@ class TicketDetails extends PureComponent {
         {this.state.edit && (
           <TicketForm initialValues={ticket} onSubmit={this.updateTicket} />
         )}
+
         {!this.state.edit && (
           <div>
-            <h1>{ticket.name}</h1>'hi i am an ticket'
+            <h1>{ticket.name}</h1>
             <p> {ticket.description}</p>
           </div>
         )}
+
+        <button>Buy this ticket</button>
         <button onClick={() => this.toggleEdit(ticket.id)}>EDIT EVENT</button>
         <button onClick={() => this.deleteThisTicket(ticket.id)}>
           Remove product
         </button>
-        <br />
-        <br /> <br />
-        <CommentsList />
-        <br />
-        <br /> <br />
-        <RiskCalculator />
       </div>
     );
   }

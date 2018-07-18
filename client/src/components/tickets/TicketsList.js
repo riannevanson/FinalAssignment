@@ -1,30 +1,20 @@
 import React, { PureComponent } from "react";
 
 import { connect } from "react-redux";
-import {
-  fetchAllTicketsFromEventId,
-  createTicket
-} from "../../actions/tickets";
+import { fetchAllTickets, createTicket } from "../../actions/tickets";
 import { Link } from "react-router-dom";
 import TicketForm from "./TicketForm";
-import { fetchEvent, updateEvent, deleteEvent } from "../../actions/events";
 
 class TicketsList extends PureComponent {
   componentWillMount() {
-    this.props.fetchAllTicketsFromEventId(this.props.match.params.id);
-    this.props.fetchEvent(this.props.match.params.id);
+    this.props.fetchAllTickets();
   }
-  createNewTicket = (ticket, eventId) => {
-    this.props.createTicket(ticket, eventId);
+  createNewTicket = ticket => {
+    this.props.createTicket(ticket);
   };
 
   render() {
-    const { tickets, event } = this.props;
-    console.log(event, "event");
-    let eventTickets = tickets.filter(
-      ticket => ticket.event !== undefined && ticket.event.id === event.id
-    );
-    console.log(eventTickets[0], "eventicket 3");
+    const { tickets } = this.props;
     return (
       <div>
         <p>Welcome</p>
@@ -34,12 +24,9 @@ class TicketsList extends PureComponent {
             Please <Link to="/login">login</Link>
           </p>
         )}
-        <div>
-          <h1>{event.name}</h1>
-          <p> {event.description}</p>
-        </div>
-        <div>
-          <h1>All tickets for this event</h1>
+
+        <p>
+          <h1>All tickets</h1>
 
           <table>
             <thead>
@@ -50,11 +37,11 @@ class TicketsList extends PureComponent {
               </tr>
             </thead>
             <tbody>
-              {eventTickets.map(ticket => (
+              {tickets.map(ticket => (
                 <tr key={ticket.id}>
                   <td>{ticket.id}</td>
                   <td>
-                    <Link to={`tickets/${ticket.id}`}>{ticket.name}</Link>
+                    <Link to={`/tickets/${ticket.id}`}>{ticket.name}</Link>
                   </td>
 
                   <td>{ticket.pictureUrl}</td>
@@ -64,8 +51,8 @@ class TicketsList extends PureComponent {
           </table>
           <h1>Create a new ticket</h1>
 
-          <TicketForm onSubmit={this.createNewTicket} event={event.id} />
-        </div>
+          <TicketForm onSubmit={this.createNewTicket} />
+        </p>
       </div>
     );
   }
@@ -74,19 +61,14 @@ class TicketsList extends PureComponent {
 const mapStateToProps = function(state) {
   return {
     tickets: state.tickets,
-    currentUser: state.currentUser,
-    event: state.event
+    currentUser: state.currentUser
   };
 };
 
 export default connect(
   mapStateToProps,
   {
-    // fetchAllTickets,
-    createTicket,
-    fetchEvent,
-    updateEvent,
-    deleteEvent,
-    fetchAllTicketsFromEventId
+    fetchAllTickets,
+    createTicket
   }
 )(TicketsList);
