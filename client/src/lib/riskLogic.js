@@ -1,6 +1,4 @@
-const numberTicketsAuthor = tickets.userId.length;
-
-const numberTicketsAuthorRisk = numberTicketsAuthor => {
+export const numberTicketsAuthorRisk = numberTicketsAuthor => {
   if (numberTicketsAuthor < 2) {
     return 10;
   } else {
@@ -8,12 +6,12 @@ const numberTicketsAuthorRisk = numberTicketsAuthor => {
   }
 };
 
-const averagePriceTicket =
-  prices.reduce((total, score) => total + score) / scores.length;
+// export const averagePriceTicket =
+//   prices.reduce((total, score) => total + score) / scores.length;
 
-const ticketPrice = ticket.price;
+// export const ticketPrice = ticket.price;
 
-const averagePriceRisk = (averagePriceTicket, ticketPrice) => {
+export const averagePriceRisk = (averagePriceTicket, ticketPrice) => {
   if (averagePriceTicket > ticketPrice)
     return 100 - (ticketPrice / averagePriceTicket) * 100;
 
@@ -21,19 +19,19 @@ const averagePriceRisk = (averagePriceTicket, ticketPrice) => {
   return expensivePrice > 10 ? 10 : expensivePrice;
 };
 
-//const timestampHour = ticket.timestamp + 2uur;
+//export const timestampHour = ticket.timestamp + 2uur;
 
-const timeAddedRisk = timestampHour => {
+export const timeAddedRisk = timestampHour => {
   return timestampHour > 9 && timestampHour < 17 ? -10 : 10;
 };
 
-const numberOfComments = tickets.comments.length;
+//export const numberOfComments = tickets.comments.length;
 
-const commentRisk = numberOfComments => {
+export const commentRisk = numberOfComments => {
   return numberOfComments > 3 ? 5 : 0;
 };
 
-const countedRisk = (
+export const countedRisk = (
   numberTicketsAuthorRisk,
   averagePriceRisk,
   timeAddedRisk,
@@ -44,7 +42,7 @@ const countedRisk = (
   );
 };
 
-const finalRisk = countedRisk => {
+export const finalRisk = countedRisk => {
   if (countedRisk > 95) return 95;
   if (countedRisk < 5) return 5;
 
