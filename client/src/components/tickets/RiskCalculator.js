@@ -59,10 +59,10 @@ class RiskCalculator extends PureComponent {
       <div>
         <div>
           finalRisk: {Math.round(riskLogic.finalRisk(countedRisk) * 10) / 10}
+          {/* <br />
           <br />
           <br />
-          <br />
-          {/* <div>priceTicketArray is: {priceTicketArray}</div>
+          <div>priceTicketArray is: {priceTicketArray}</div>
           <div>numberTicketsAuthor is: {numberTicketsAuthor}</div>
           {console.log(numberTicketsAuthor, "numberTicketsAuthor")}
           <div>averagePriceTicket is: {averagePriceTicket}</div>

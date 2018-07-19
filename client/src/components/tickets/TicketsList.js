@@ -51,7 +51,9 @@ class TicketsList extends PureComponent {
                     <Link to={`tickets/${ticket.id}`}>{ticket.name}</Link>
                   </td>
 
-                  <td>{ticket.pictureUrl}</td>
+                  <td>
+                    <img src={ticket.pictureUrl} />
+                  </td>
                 </tr>
               ))}
             </tbody>

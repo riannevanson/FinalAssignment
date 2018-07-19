@@ -54,12 +54,12 @@ export const fetchAllCommentsFromTicketId = ticketId => dispatch => {
 //   // because you send back an envelope! (so response.body.comments)
 // };
 
-export const createComment = (comment, eventId) => (dispatch, getState) => {
+export const createComment = (ticketId, comment) => (dispatch, getState) => {
   const state = getState();
   const jwt = state.currentUser.jwt;
 
   request
-    .post(`${baseUrl}/events/${eventId}/comments`)
+    .post(`${baseUrl}/tickets/${ticketId}/comments`)
     .set("Authorization", `Bearer ${jwt}`)
     .send(comment)
     .then(response =>

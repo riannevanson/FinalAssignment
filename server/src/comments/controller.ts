@@ -34,12 +34,13 @@ export default class CommentController {
   @HttpCode(201)
   async createComment(
     @Body() comment: Comment,
-    @CurrentUser() user: number,
-    @Param("eventId") eventId: number
+    @CurrentUser() user: User,
+    @Param("ticketId") ticketId: number
   ) {
-    const ticket = await Ticket.findOneById(eventId);
-    if (!ticket) throw new NotFoundError("Cannot find event");
+    const ticket = await Ticket.findOneById(ticketId);
+    if (!ticket) throw new NotFoundError("Cannot find ticket");
     comment.user = user;
+    comment.ticket = ticket;
 
     return comment.save();
   }

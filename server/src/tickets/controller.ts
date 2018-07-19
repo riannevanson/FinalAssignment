@@ -32,11 +32,9 @@ export default class TicketController {
   }
 
   @Authorized()
-  @Put("/events/:eventId/tickets/:id")
+  @Put("/tickets/:id")
   async updateTicket(@Param("id") id: number, @Body() update: Partial<Ticket>) {
-    const ticket = await Ticket.findOneById(id, {
-      relations: ["user", "event", "comment"]
-    });
+    const ticket = await Ticket.findOneById(id);
     if (!ticket) throw new NotFoundError("Cannot find ticket");
 
     return Ticket.merge(ticket, update).save();
@@ -45,7 +43,7 @@ export default class TicketController {
   @Authorized()
   @Post("/events/:eventId/tickets")
   @HttpCode(201)
-  async createTicket(
+  async createEvent(
     @Body() ticket: Ticket,
     @CurrentUser() user: number,
     @Param("eventId") eventId: number

@@ -5,7 +5,7 @@ import {
   fetchAllCommentsFromTicketId,
   createComment
 } from "../../actions/comments";
-import { fetchAllTickets, fetchTicket } from "../../actions/tickets";
+import { fetchAllTickets } from "../../actions/tickets";
 import { Link } from "react-router-dom";
 import CommentForm from "./CommentForm";
 import { fetchEvent, updateEvent, deleteEvent } from "../../actions/events";
@@ -15,8 +15,8 @@ class CommentsList extends PureComponent {
     this.props.fetchAllCommentsFromTicketId(this.props.ticket.id);
   }
 
-  createNewComment = (comment, ticketId) => {
-    this.props.createComment(comment, ticketId);
+  createNewComment = comment => {
+    this.props.createComment(this.props.ticket.id, comment);
   };
 
   render() {
@@ -24,6 +24,8 @@ class CommentsList extends PureComponent {
     let ticketComments = comments.filter(
       comment => comment.ticket !== undefined && comment.ticket.id === ticket.id
     );
+
+    const ticketUserId = ticket.user !== undefined ? ticket.user.id : 0;
 
     return (
       <div>
@@ -51,7 +53,7 @@ class CommentsList extends PureComponent {
             <tbody>
               {ticketComments.map(comment => (
                 <tr key={comment.id}>
-                  <td>{comment.user.email}</td>
+                  <td>{comment.user.firstName}</td>
                   <td>
                     <Link to={`comments/${comment.id}`}>{comment.comment}</Link>
                   </td>
@@ -59,9 +61,15 @@ class CommentsList extends PureComponent {
               ))}
             </tbody>
           </table>
-          <h1>Create a new comment</h1>
-
-          <CommentForm onSubmit={this.createNewComment} ticket={ticket.id} />
+          {1 && (
+            <div>
+              <h1>Create a new comment</h1>
+              <CommentForm
+                onSubmit={this.createNewComment}
+                ticket={ticket.id}
+              />
+            </div>
+          )}
         </div>
       </div>
     );
@@ -79,7 +87,6 @@ const mapStateToProps = function(state) {
 export default connect(
   mapStateToProps,
   {
-    // fetchAllComments,
     createComment,
     fetchEvent,
     updateEvent,

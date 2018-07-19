@@ -14,7 +14,15 @@ class EventsList extends PureComponent {
   };
 
   render() {
-    const { events } = this.props;
+    let { events } = this.props;
+
+    function isFutureEvent(value) {
+      const currentDate = new Date();
+      const eventDate = new Date(value.endDate);
+      return currentDate.getTime() < eventDate.getTime();
+    }
+    events = events.filter(isFutureEvent);
+
     return (
       <div>
         <p>Welcome</p>

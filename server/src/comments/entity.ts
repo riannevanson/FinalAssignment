@@ -29,8 +29,8 @@ export default class Comment extends BaseEntity {
   timestamp: Date;
 
   @ManyToOne(_ => Ticket, ticket => ticket.comment)
-  ticket: number;
+  ticket: Ticket;
 
   @ManyToOne(_ => User, user => user.comment)
-  user: number;
+  user: User;
 }

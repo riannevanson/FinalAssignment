@@ -12,7 +12,7 @@ export const averagePriceRisk = (averagePriceTicket, currentTicketPrice) => {
 
   const expensivePrice = 100 - (averagePriceTicket / currentTicketPrice) * 100;
 
-  return expensivePrice > 10 ? 10 : expensivePrice;
+  return expensivePrice > 10 ? -10 : -expensivePrice;
 };
 
 export const timeAddedRisk = timestampHour => {
