@@ -6,26 +6,18 @@ export const numberTicketsAuthorRisk = numberTicketsAuthor => {
   }
 };
 
-// export const averagePriceTicket =
-//   prices.reduce((total, score) => total + score) / scores.length;
+export const averagePriceRisk = (averagePriceTicket, currentTicketPrice) => {
+  if (averagePriceTicket > currentTicketPrice)
+    return 100 - (currentTicketPrice / averagePriceTicket) * 100;
 
-// export const ticketPrice = ticket.price;
+  const expensivePrice = 100 - (averagePriceTicket / currentTicketPrice) * 100;
 
-export const averagePriceRisk = (averagePriceTicket, ticketPrice) => {
-  if (averagePriceTicket > ticketPrice)
-    return 100 - (ticketPrice / averagePriceTicket) * 100;
-
-  const expensivePrice = ticketPrice - averagePriceTicket; // todo: fixme
   return expensivePrice > 10 ? 10 : expensivePrice;
 };
-
-//export const timestampHour = ticket.timestamp + 2uur;
 
 export const timeAddedRisk = timestampHour => {
   return timestampHour > 9 && timestampHour < 17 ? -10 : 10;
 };
-
-//export const numberOfComments = tickets.comments.length;
 
 export const commentRisk = numberOfComments => {
   return numberOfComments > 3 ? 5 : 0;

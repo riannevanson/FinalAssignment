@@ -7,14 +7,6 @@ import * as riskLogic from "../../lib/riskLogic";
 class RiskCalculator extends PureComponent {
   componentWillMount() {
     this.props.fetchAllTicketsFromEventId(2);
-    // const fetchCurrentTicket = () => {
-    //   let currentTicket = 0;
-    //   if (this.props.currentTicket.length > 0) {
-    //     return this.props.currentTicket;
-    //   } else {
-    //     return null;
-    //   }
-    // };
   }
 
   render() {
@@ -22,17 +14,10 @@ class RiskCalculator extends PureComponent {
     if (currentTicket === null || tickets === null || event === null)
       return "Loading...";
     if (!currentTicket) return "Not found currentTicket";
-    // const currentTicket = this.props.currentTicket || {};
-    // let finalRisk = 0;
 
-    // if (this.props.currentTicket || this.props.currentTicket.length > 0) {
-
-    //nessesary variables------------------------------------
     const numberTicketsAuthor = this.props.tickets.filter(ticket => {
       return ticket.user.id === this.props.currentTicket.user.id;
     }).length;
-
-    // console.log(numberTicketsAuthor, "numberTicketsAuthor");
 
     const PriceTicketArray = this.props.tickets
       .filter(ticket => {
@@ -71,47 +56,6 @@ class RiskCalculator extends PureComponent {
 
       return (
         <div>
-          <div>PriceTicketArray is: {PriceTicketArray}</div>
-
-          <div>numberTicketsAuthor is: {numberTicketsAuthor}</div>
-          {console.log(numberTicketsAuthor, "numberTicketsAuthor")}
-
-          <div>averagePriceTicket is: {averagePriceTicket}</div>
-          {console.log(averagePriceTicket, "averagePriceTicke")}
-
-          <div>currentTicketPrice is: {currentTicketPrice}</div>
-          {console.log(currentTicketPrice, "currentTicketPrice")}
-
-          <div>numberofcomments is: {numberofcomments}</div>
-          {console.log(numberofcomments, "numberofcomments")}
-
-          <div>timestampHour is: {timestampHour}</div>
-          {console.log(timestampHour, "timestampHour")}
-
-          <div>
-            numberTicketsAuthorRisk:{" "}
-            {riskLogic.numberTicketsAuthorRisk(numberTicketsAuthor)}
-          </div>
-
-          <div>
-            averagePriceRisk:{" "}
-            {riskLogic.averagePriceRisk(averagePriceTicket, currentTicketPrice)}
-          </div>
-
-          <div>timeAddedRisk: {riskLogic.timeAddedRisk(timestampHour)}</div>
-
-          <div>commentRisk: {riskLogic.commentRisk(numberofcomments)}</div>
-
-          <div>
-            countedRisk:
-            {riskLogic.numberTicketsAuthorRisk(numberTicketsAuthor) +
-              riskLogic.averagePriceRisk(
-                averagePriceTicket,
-                currentTicketPrice
-              ) +
-              riskLogic.timeAddedRisk(timestampHour) +
-              riskLogic.commentRisk(numberofcomments)}
-          </div>
           <div>finalRisk: {riskLogic.finalRisk(countedRisk)}</div>
         </div>
       );
