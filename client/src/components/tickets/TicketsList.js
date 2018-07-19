@@ -1,17 +1,13 @@
 import React, { PureComponent } from "react";
-
 import { connect } from "react-redux";
-import {
-  fetchAllTicketsFromEventId,
-  createTicket
-} from "../../actions/tickets";
+import { fetchAllTickets, createTicket } from "../../actions/tickets";
 import { Link } from "react-router-dom";
 import TicketForm from "./TicketForm";
 import { fetchEvent, updateEvent, deleteEvent } from "../../actions/events";
 
 class TicketsList extends PureComponent {
   componentWillMount() {
-    this.props.fetchAllTicketsFromEventId(this.props.match.params.id);
+    this.props.fetchAllTickets(this.props.match.params.id);
     this.props.fetchEvent(this.props.match.params.id);
   }
   createNewTicket = (ticket, eventId) => {
@@ -80,11 +76,10 @@ const mapStateToProps = function(state) {
 export default connect(
   mapStateToProps,
   {
-    // fetchAllTickets,
     createTicket,
     fetchEvent,
     updateEvent,
     deleteEvent,
-    fetchAllTicketsFromEventId
+    fetchAllTickets
   }
 )(TicketsList);

@@ -18,7 +18,7 @@ class TicketForm extends PureComponent {
   };
 
   render() {
-    const initialValues = this.props.initialValues || {};
+    const initialValues = this.props.initialValues || {}; // todo consolelog
 
     return (
       <form onSubmit={this.handleSubmit}>

@@ -7,8 +7,6 @@ export const FETCHED_ALL_TICKETS = "FETCHED_ALL_TICKETS";
 export const CREATE_TICKET = "CREATE_TICKET";
 export const REMOVE_TICKET = "REMOVE_TICKET";
 export const UPDATE_TICKET = "UPDATE_TICKET";
-export const FETCHED_ALL_TICKETS_FROM_EVENT_ID =
-  "FETCHED_ALL_TICKETS_FROM_EVENT_ID";
 
 export const fetchTicket = ticketId => dispatch => {
   request
@@ -22,12 +20,12 @@ export const fetchTicket = ticketId => dispatch => {
     .catch(err => alert(err));
 };
 
-export const fetchAllTicketsFromEventId = eventId => dispatch => {
+export const fetchAllTickets = eventId => dispatch => {
   request
     .get(`${baseUrl}/events/${eventId}/tickets`)
     .then(response =>
       dispatch({
-        type: FETCHED_ALL_TICKETS_FROM_EVENT_ID,
+        type: FETCHED_ALL_TICKETS,
         payload: response.body.tickets
       })
     )
@@ -88,7 +86,7 @@ export const deleteTicket = ticketId => (dispatch, getState) => {
     });
 };
 
-export const updateTicket = (ticketId, eventId, updates) => (
+export const updateTicket = (updates, ticketId, eventId) => (
   dispatch,
   getState
 ) => {

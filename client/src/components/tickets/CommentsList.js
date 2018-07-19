@@ -5,7 +5,7 @@ import {
   fetchAllCommentsFromTicketId,
   createComment
 } from "../../actions/comments";
-import { fetchAllTicketsFromEventId, fetchTicket } from "../../actions/tickets";
+import { fetchAllTickets, fetchTicket } from "../../actions/tickets";
 import { Link } from "react-router-dom";
 import CommentForm from "./CommentForm";
 import { fetchEvent, updateEvent, deleteEvent } from "../../actions/events";
@@ -85,6 +85,6 @@ export default connect(
     updateEvent,
     deleteEvent,
     fetchAllCommentsFromTicketId,
-    fetchAllTicketsFromEventId
+    fetchAllTickets
   }
 )(CommentsList);

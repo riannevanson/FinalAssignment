@@ -1,74 +1,105 @@
 import React, { PureComponent } from "react";
 import { connect } from "react-redux";
-import { fetchAllTicketsFromEventId } from "../../actions/tickets";
+import { fetchAllTickets } from "../../actions/tickets";
 import * as riskLogic from "../../lib/riskLogic";
 
 class RiskCalculator extends PureComponent {
-  componentWillMount() {
-    this.props.fetchAllTicketsFromEventId(1); //need to fix this, but match params doesn't work and doesn't seem to cause a problem
-  }
-
   render() {
-    const { tickets, currentTicket, event } = this.props;
-    if (currentTicket === null || tickets === null || event === null)
-      return "Loading...";
-    if (!currentTicket) return "Not found currentTicket";
+    const { tickets, currentTicket } = this.props;
+    if (currentTicket.length === 0 || tickets.length === 0) return "Loading...";
 
-    const numberTicketsAuthor = this.props.tickets.filter(ticket => {
-      return ticket.user.id === this.props.currentTicket.user.id;
+    const numberTicketsAuthor = tickets.filter(ticket => {
+      return ticket.user.id === currentTicket.user.id;
     }).length;
 
-    const PriceTicketArray = this.props.tickets
+    const priceTicketArray = tickets
       .filter(ticket => {
         return (
-          ticket.event.id === this.props.currentTicket.event.id &&
-          ticket.user.id !== this.props.currentTicket.user.id
+          ticket.event.id === currentTicket.event.id &&
+          ticket.user.id !== currentTicket.user.id
         );
       })
       .map(ticket => ticket.price);
 
-    const comments = this.props.currentTicket.comment;
+    const comments = currentTicket.comment;
+    const currentTicketPrice = currentTicket.price;
+    const currentTimeStamp = currentTicket.timestamp;
 
-    const currentTicketPrice = this.props.currentTicket.price;
+    const averagePriceTicket =
+      priceTicketArray.length === 0
+        ? currentTicketPrice
+        : priceTicketArray.reduce((total, score) => total + score) /
+          priceTicketArray.length;
 
-    const currentTimeStamp = this.props.currentTicket.timestamp;
+    // if (currentTicket !== undefined) {
+    //   const averagePriceTicket = priceTicketArray => {
+    //     if (priceTicketArray.length > 0) {
+    //       return (
+    //         priceTicketArray.reduce((total, score) => total + score) /
+    //         priceTicketArray.length
+    //       );
+    //     } else {
+    //       return currentTicketPrice;
+    //     }
+    //   };
 
-    if (numberTicketsAuthor.length > 0 || PriceTicketArray.length > 0) {
-      const averagePriceTicket =
-        PriceTicketArray.reduce((total, score) => total + score) /
-        PriceTicketArray.length;
+    const numberofcomments = comments.length;
+    const time = new Date(currentTimeStamp);
+    const timestampHour = time.getHours() + 2;
+    console.log(numberofcomments, "numberofcomments");
+    console.log(timestampHour, "timestampHour");
 
-      const numberofcomments = comments.length;
-      const time = new Date(currentTimeStamp);
-      const timestampHour = time.getHours() + 2;
+    const countedRisk =
+      riskLogic.numberTicketsAuthorRisk(numberTicketsAuthor) +
+      riskLogic.averagePriceRisk(averagePriceTicket, currentTicketPrice) +
+      riskLogic.timeAddedRisk(timestampHour) +
+      riskLogic.commentRisk(numberofcomments);
 
-      const countedRisk =
-        riskLogic.numberTicketsAuthorRisk(numberTicketsAuthor) +
-        riskLogic.averagePriceRisk(averagePriceTicket, currentTicketPrice) +
-        riskLogic.timeAddedRisk(timestampHour) +
-        riskLogic.commentRisk(numberofcomments);
-
-      return (
+    return (
+      <div>
         <div>
+          finalRisk: {Math.round(riskLogic.finalRisk(countedRisk) * 10) / 10}
+          <br />
+          <br />
+          <br />
+          {/* <div>priceTicketArray is: {priceTicketArray}</div>
+          <div>numberTicketsAuthor is: {numberTicketsAuthor}</div>
+          {console.log(numberTicketsAuthor, "numberTicketsAuthor")}
+          <div>averagePriceTicket is: {averagePriceTicket}</div>
+          {console.log(averagePriceTicket, "averagePriceTicke")}
+          <div>currentTicketPrice is: {currentTicketPrice}</div>
+          {console.log(currentTicketPrice, "currentTicketPrice")}
+          <div>numberofcomments is: {numberofcomments}</div>
+          {console.log(numberofcomments, "numberofcomments")}
+          <div>timestampHour is: {timestampHour}</div>
+          {console.log(timestampHour, "timestampHour")}
+          {console.log(currentTicket, "currentTicket")}
           <div>
-            finalRisk: {Math.round(riskLogic.finalRisk(countedRisk) * 10) / 10}
+            numberTicketsAuthorRisk:
+            {riskLogic.numberTicketsAuthorRisk(numberTicketsAuthor)}
           </div>
+          <div>
+            averagePriceRisk:
+            {riskLogic.averagePriceRisk(averagePriceTicket, currentTicketPrice)}
+          </div>
+          <div>timeAddedRisk: {riskLogic.timeAddedRisk(timestampHour)}</div>
+          <div>commentRisk: {riskLogic.commentRisk(numberofcomments)}</div>
+          <div>finalRisk: {riskLogic.finalRisk(countedRisk)}</div> */}
         </div>
-      );
-    } else {
-      return "riskRating = We can't check your risk";
-    }
+      </div>
+    );
   }
 }
 
 const mapStateToProps = function(state) {
   return {
-    event: state.event,
-    tickets: state.tickets
+    tickets: state.tickets,
+    currentUser: state.currentUser,
+    event: state.event
   };
 };
 
 export default connect(
   mapStateToProps,
-  { fetchAllTicketsFromEventId }
+  { fetchAllTickets }
 )(RiskCalculator);

@@ -1,7 +1,12 @@
 import React, { PureComponent } from "react";
 
 import { connect } from "react-redux";
-import { fetchTicket, updateTicket, deleteTicket } from "../../actions/tickets";
+import {
+  fetchTicket,
+  updateTicket,
+  deleteTicket,
+  fetchAllTickets
+} from "../../actions/tickets";
 import TicketForm from "./TicketForm";
 import CommentsList from "./CommentsList";
 import RiskCalculator from "./RiskCalculator";
@@ -13,8 +18,7 @@ class TicketDetails extends PureComponent {
 
   componentWillMount(props) {
     this.props.fetchTicket(this.props.match.params.ticketId);
-    // this.props.fetchTicket(this.props.match.params.id);
-    // console.log(this.props.match.params.id);
+    this.props.fetchAllTickets(0);
   }
 
   toggleEdit = () => {
@@ -23,9 +27,9 @@ class TicketDetails extends PureComponent {
     });
   };
 
-  updateTicket = (ticket, ticketId, eventId) => {
-    ticketId = this.props.match.params.ticketId;
-    eventId = this.props.match.params.id;
+  updateTicket = ticket => {
+    const ticketId = this.props.match.params.ticketId;
+    const eventId = this.props.match.params.id;
     this.props.updateTicket(ticket, ticketId, eventId);
     this.toggleEdit();
   };
@@ -57,7 +61,10 @@ class TicketDetails extends PureComponent {
         <CommentsList />
         <br />
         <br /> <br />
-        <RiskCalculator currentTicket={ticket} />
+        <RiskCalculator
+          currentTicket={ticket}
+          ticketId={this.props.match.params.ticketId}
+        />
       </div>
     );
   }
@@ -70,5 +77,5 @@ const mapStateToProps = function(state, props) {
 
 export default connect(
   mapStateToProps,
-  { fetchTicket, updateTicket, deleteTicket }
+  { fetchTicket, updateTicket, deleteTicket, fetchAllTickets }
 )(TicketDetails);
