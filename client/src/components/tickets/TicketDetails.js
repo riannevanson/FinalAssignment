@@ -3,7 +3,6 @@ import React, { PureComponent } from "react";
 import { connect } from "react-redux";
 import { fetchTicket, updateTicket, deleteTicket } from "../../actions/tickets";
 import TicketForm from "./TicketForm";
-// import TicketsList from "./tickets/TicketsList";
 import CommentsList from "./CommentsList";
 import RiskCalculator from "./RiskCalculator";
 
@@ -14,6 +13,8 @@ class TicketDetails extends PureComponent {
 
   componentWillMount(props) {
     this.props.fetchTicket(this.props.match.params.ticketId);
+    // this.props.fetchTicket(this.props.match.params.id);
+    // console.log(this.props.match.params.id);
   }
 
   toggleEdit = () => {
@@ -22,8 +23,10 @@ class TicketDetails extends PureComponent {
     });
   };
 
-  updateTicket = ticket => {
-    this.props.updateTicket(this.props.match.params.id, ticket);
+  updateTicket = (ticket, ticketId, eventId) => {
+    ticketId = this.props.match.params.ticketId;
+    eventId = this.props.match.params.id;
+    this.props.updateTicket(ticket, ticketId, eventId);
     this.toggleEdit();
   };
 
@@ -32,7 +35,7 @@ class TicketDetails extends PureComponent {
   };
 
   render() {
-    const { ticket, event } = this.props;
+    const { ticket } = this.props;
     if (!ticket) return null;
     return (
       <div>

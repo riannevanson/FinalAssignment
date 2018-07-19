@@ -88,12 +88,15 @@ export const deleteTicket = ticketId => (dispatch, getState) => {
     });
 };
 
-export const updateTicket = (ticketId, updates) => (dispatch, getState) => {
+export const updateTicket = (ticketId, eventId, updates) => (
+  dispatch,
+  getState
+) => {
   const state = getState();
   const jwt = state.currentUser.jwt;
 
   request
-    .put(`${baseUrl}/tickets/${ticketId}`)
+    .put(`${baseUrl}/events/${eventId}/tickets/${ticketId}`)
     .set("Authorization", `Bearer ${jwt}`)
     .send(updates)
     .then(response => {

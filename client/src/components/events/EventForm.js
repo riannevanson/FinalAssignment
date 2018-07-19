@@ -65,6 +65,7 @@ class EventForm extends PureComponent {
         <div>
           <label htmlFor="startDate">startDate</label>
           <input
+            type="date"
             name="startDate"
             id="startDate"
             value={
@@ -79,6 +80,7 @@ class EventForm extends PureComponent {
         <div>
           <label htmlFor="endDate">endDate</label>
           <input
+            type="date"
             name="endDate"
             id="endDate"
             value={

@@ -1,14 +1,20 @@
 import {
   JsonController,
   Get,
-  Param
+  Param,
+  Authorized,
+  Post,
+  HttpCode,
+  Body,
+  CurrentUser,
+  NotFoundError
   // Body,
   // Put,
   // NotFoundError,
 } from "routing-controllers";
 import Comment from "./entity";
-// import User from "../users/entity";
-// import Ticket from "../tickets/entity";
+import User from "../users/entity";
+import Ticket from "../tickets/entity";
 
 @JsonController()
 export default class CommentController {
@@ -21,5 +27,20 @@ export default class CommentController {
   async allComments(@Param("ticketId") ticketId: number) {
     const comments = await Comment.find({ relations: ["ticket", "user"] });
     return { comments };
+  }
+
+  @Authorized()
+  @Post("/tickets/:ticketId/comments")
+  @HttpCode(201)
+  async createComment(
+    @Body() comment: Comment,
+    @CurrentUser() user: number,
+    @Param("eventId") eventId: number
+  ) {
+    const ticket = await Ticket.findOneById(eventId);
+    if (!ticket) throw new NotFoundError("Cannot find event");
+    comment.user = user;
+
+    return comment.save();
   }
 }

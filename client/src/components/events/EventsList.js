@@ -41,7 +41,7 @@ class EventsList extends PureComponent {
                 <tr key={event.id}>
                   <td>{event.id}</td>
                   <td>
-                    <Link to={`/events/${event.id}`}>{event.name}</Link>
+                    <Link to={`/events/${event.id}/tickets`}>{event.name}</Link>
                   </td>
 
                   <td>{event.pictureUrl}</td>

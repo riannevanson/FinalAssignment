@@ -57,7 +57,6 @@ export const fetchAllCommentsFromTicketId = ticketId => dispatch => {
 export const createComment = (comment, eventId) => (dispatch, getState) => {
   const state = getState();
   const jwt = state.currentUser.jwt;
-  console.log(eventId, "eventId in action");
 
   request
     .post(`${baseUrl}/events/${eventId}/comments`)

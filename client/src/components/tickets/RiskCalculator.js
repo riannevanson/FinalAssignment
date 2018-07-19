@@ -1,12 +1,11 @@
 import React, { PureComponent } from "react";
 import { connect } from "react-redux";
-import { userId } from "../../jwt";
 import { fetchAllTicketsFromEventId } from "../../actions/tickets";
 import * as riskLogic from "../../lib/riskLogic";
 
 class RiskCalculator extends PureComponent {
   componentWillMount() {
-    this.props.fetchAllTicketsFromEventId(2);
+    this.props.fetchAllTicketsFromEventId(1); //need to fix this, but match params doesn't work and doesn't seem to cause a problem
   }
 
   render() {
@@ -34,11 +33,6 @@ class RiskCalculator extends PureComponent {
 
     const currentTimeStamp = this.props.currentTicket.timestamp;
 
-    const renderVariables = (numberTicketsAuthor,
-    PriceTicketArray,
-    currentTicketPrice,
-    comments,
-    currentTimeStamp);
     if (numberTicketsAuthor.length > 0 || PriceTicketArray.length > 0) {
       const averagePriceTicket =
         PriceTicketArray.reduce((total, score) => total + score) /
@@ -56,18 +50,14 @@ class RiskCalculator extends PureComponent {
 
       return (
         <div>
-          <div>finalRisk: {riskLogic.finalRisk(countedRisk)}</div>
+          <div>
+            finalRisk: {Math.round(riskLogic.finalRisk(countedRisk) * 10) / 10}
+          </div>
         </div>
       );
     } else {
-      return "riskRating = pietje";
+      return "riskRating = We can't check your risk";
     }
-
-    //let finalRisk = numberTicketsAuthor;
-    //logic--------------------------------------------------------------
-    //  riskLogic.averagePriceRisk(averagePriceTicket, ticketPrice);
-
-    // console.log("numberofcomments=", this.props.currentTicket.comment.length);
   }
 }
 

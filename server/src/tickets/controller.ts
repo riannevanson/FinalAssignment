@@ -31,8 +31,8 @@ export default class TicketController {
     return { tickets };
   }
 
-  // @Authorized()
-  @Put("/tickets/:id")
+  @Authorized()
+  @Put("/events/:eventId/tickets/:id")
   async updateTicket(@Param("id") id: number, @Body() update: Partial<Ticket>) {
     const ticket = await Ticket.findOneById(id);
     if (!ticket) throw new NotFoundError("Cannot find ticket");
@@ -43,7 +43,7 @@ export default class TicketController {
   @Authorized()
   @Post("/events/:eventId/tickets")
   @HttpCode(201)
-  async createEvent(
+  async createTicket(
     @Body() ticket: Ticket,
     @CurrentUser() user: number,
     @Param("eventId") eventId: number
