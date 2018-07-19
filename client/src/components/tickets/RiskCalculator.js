@@ -63,6 +63,12 @@ class RiskCalculator extends PureComponent {
       const time = new Date(currentTimeStamp);
       const timestampHour = time.getHours() + 2;
 
+      const countedRisk =
+        riskLogic.numberTicketsAuthorRisk(numberTicketsAuthor) +
+        riskLogic.averagePriceRisk(averagePriceTicket, currentTicketPrice) +
+        riskLogic.timeAddedRisk(timestampHour) +
+        riskLogic.commentRisk(numberofcomments);
+
       return (
         <div>
           <div>PriceTicketArray is: {PriceTicketArray}</div>
@@ -93,6 +99,20 @@ class RiskCalculator extends PureComponent {
           </div>
 
           <div>timeAddedRisk: {riskLogic.timeAddedRisk(timestampHour)}</div>
+
+          <div>commentRisk: {riskLogic.commentRisk(numberofcomments)}</div>
+
+          <div>
+            countedRisk:
+            {riskLogic.numberTicketsAuthorRisk(numberTicketsAuthor) +
+              riskLogic.averagePriceRisk(
+                averagePriceTicket,
+                currentTicketPrice
+              ) +
+              riskLogic.timeAddedRisk(timestampHour) +
+              riskLogic.commentRisk(numberofcomments)}
+          </div>
+          <div>finalRisk: {riskLogic.finalRisk(countedRisk)}</div>
         </div>
       );
     } else {
