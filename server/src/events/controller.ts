@@ -57,6 +57,8 @@ export default class EventController {
   @HttpCode(201)
   async createEvent(@Body() event: Event, @CurrentUser() user: User) {
     event.user = user;
+    // event.pictureUrl =
+    //   "http://www.youthincmag.com/wp-content/uploads/2016/07/musicfestival1.jpg";
     return await event.save();
   }
 }

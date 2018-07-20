@@ -40,11 +40,6 @@ class EventsList extends PureComponent {
             {events.map(event => (
               <div className="cardWrapper">
                 <Card className="eventCard">
-                  {/* <CardMedia
-                style={{ height: 0, paddingTop: "2%", width: 1 }}
-                image={event.pictureUrl}
-                title={event.name}
-              /> */}
                   <img src={event.pictureUrl} className="pictureEvent" />
                   <CardContent>
                     <div key={event.id}>
