@@ -7,7 +7,7 @@ import EventsList from "./components/events/EventsList";
 import LogoutPage from "./components/logout/LogoutPage";
 import "./App.css";
 import TopBar from "./components/layout/TopBar";
-import TicketsList from "./components/tickets/TicketsList";
+import EventAndTicketsList from "./components/tickets/EventAndTicketsList";
 import TicketDetails from "./components/tickets/TicketDetails";
 import CommentsList from "./components/tickets/CommentsList";
 
@@ -29,7 +29,11 @@ class App extends Component {
             <Route exact path="/signup" component={SignupPage} />
             <Route exact path="/events" component={EventsList} />
             {/* <Route exact path="/events/:id" component={EventDetails} /> */}
-            <Route exact path="/events/:id/tickets" component={TicketsList} />
+            <Route
+              exact
+              path="/events/:id/tickets"
+              component={EventAndTicketsList}
+            />
             <Route
               exact
               path="/events/:id/tickets/:ticketId"

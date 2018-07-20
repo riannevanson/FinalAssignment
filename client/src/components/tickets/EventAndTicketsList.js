@@ -4,6 +4,8 @@ import { fetchAllTickets, createTicket } from "../../actions/tickets";
 import { Link } from "react-router-dom";
 import TicketForm from "./TicketForm";
 import { fetchEvent, updateEvent, deleteEvent } from "../../actions/events";
+import EventDetails from "../events/EventDetails";
+import Card from "@material-ui/core/Card";
 
 class TicketsList extends PureComponent {
   componentWillMount() {
@@ -20,47 +22,37 @@ class TicketsList extends PureComponent {
       ticket => ticket.event !== undefined && ticket.event.id === event.id
     );
     return (
-      <div>
-        <p>Welcome</p>
-
+      <div className="pageContainer">
         {!this.props.currentUser && (
           <p>
             Please <Link to="/login">login</Link>
           </p>
         )}
         <div>
-          <h1>{event.name}</h1>
-          <p> {event.description}</p>
+          <EventDetails eventId={event.id} />
+          <Card className="creatNew">
+            Create a new ticket
+            <TicketForm onSubmit={this.createNewTicket} event={event.id} />
+          </Card>
         </div>
-        <div>
+        <div className="allListContainer">
           <h1>All tickets for this event</h1>
 
-          <table>
-            <thead>
-              <tr>
-                <th>#</th>
-                <th>Name</th>
-                <th>Picture</th>
+          {eventTickets.map(ticket => (
+            <Card className="eventCard">
+              <tr key={ticket.id}>
+                <td>
+                  <img className="pictureEvent" src={ticket.pictureUrl} />
+                </td>
+                <td>
+                  <Link to={`tickets/${ticket.id}`}>
+                    <div className="dikgedrukt">{ticket.name} </div>
+                  </Link>
+                </td>
+                <td> for €{ticket.price}</td>
               </tr>
-            </thead>
-            <tbody>
-              {eventTickets.map(ticket => (
-                <tr key={ticket.id}>
-                  <td>{ticket.id}</td>
-                  <td>
-                    <Link to={`tickets/${ticket.id}`}>{ticket.name}</Link>
-                  </td>
-
-                  <td>
-                    <img src={ticket.pictureUrl} />
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-          <h1>Create a new ticket</h1>
-
-          <TicketForm onSubmit={this.createNewTicket} event={event.id} />
+            </Card>
+          ))}
         </div>
       </div>
     );

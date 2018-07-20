@@ -15,7 +15,7 @@ const TopBar = props => {
     <AppBar position="absolute" style={{ zIndex: 10 }}>
       <Toolbar>
         <Typography variant="title" color="inherit" style={{ flex: 1 }}>
-          The best ticket generator!
+          Tick-It-Tonight
         </Typography>
         {user && (
           <Button color="inherit">

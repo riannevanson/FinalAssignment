@@ -4,6 +4,9 @@ import { connect } from "react-redux";
 import { fetchAllEvents, createEvent } from "../../actions/events";
 import { Link } from "react-router-dom";
 import EventForm from "./EventForm";
+import Card from "@material-ui/core/Card";
+import CardMedia from "@material-ui/core/CardMedia";
+import CardContent from "@material-ui/core/CardContent";
 
 class EventsList extends PureComponent {
   componentWillMount() {
@@ -25,41 +28,46 @@ class EventsList extends PureComponent {
 
     return (
       <div>
-        <p>Welcome</p>
-
         {!this.props.currentUser && (
-          <p>
+          <p className="login">
             Please <Link to="/login">login</Link>
           </p>
         )}
+        <div className="pageContainer">
+          <div className="allListContainer">
+            <h1>All events</h1>
 
-        <div>
-          <h1>All events</h1>
+            {events.map(event => (
+              <div className="cardWrapper">
+                <Card className="eventCard">
+                  {/* <CardMedia
+                style={{ height: 0, paddingTop: "2%", width: 1 }}
+                image={event.pictureUrl}
+                title={event.name}
+              /> */}
+                  <img src={event.pictureUrl} className="pictureEvent" />
+                  <CardContent>
+                    <div key={event.id}>
+                      <div>
+                        <Link to={`/events/${event.id}/tickets`}>
+                          <div className="dikgedrukt"> {event.name}</div>
+                        </Link>
+                        <div>starts at: {event.startDate}</div>
+                        <div> Ends at: {event.endDate} </div>
+                      </div>
+                    </div>
+                  </CardContent>
+                </Card>
+              </div>
+            ))}
+          </div>
+          {this.props.currentUser && (
+            <Card className="creatNew">
+              <h1>Create a new event!</h1>
 
-          <table>
-            <thead>
-              <tr>
-                <th>#</th>
-                <th>Name</th>
-                <th>Picture</th>
-              </tr>
-            </thead>
-            <tbody>
-              {events.map(event => (
-                <tr key={event.id}>
-                  <td>{event.id}</td>
-                  <td>
-                    <Link to={`/events/${event.id}/tickets`}>{event.name}</Link>
-                  </td>
-
-                  <td>{event.pictureUrl}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-          <h1>Create a new event</h1>
-
-          <EventForm onSubmit={this.createNewEvent} />
+              <EventForm onSubmit={this.createNewEvent} />
+            </Card>
+          )}
         </div>
       </div>
     );

@@ -37,7 +37,7 @@ export default class EventController {
   async allEvents() {
     const events = await Event.find({
       order: {
-        id: "ASC"
+        id: "DESC"
       }
     });
     return { events };
@@ -59,15 +59,4 @@ export default class EventController {
     event.user = user;
     return await event.save();
   }
-
-  //   @Post("/events")
-  //   @HttpCode(201)
-
-  //   async createGame(@CurrentUser() user: User) {
-  //     const entity = await Event.create().save();
-
-  //     const event = await Event.findOneById(entity.id);
-  //     if (!event) throw new NotFoundError("Cannot find event");
-
-  //     return event.save();
 }

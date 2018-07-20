@@ -1,4 +1,5 @@
 import React, { PureComponent } from "react";
+import Button from "material-ui/Button";
 
 class EventForm extends PureComponent {
   state = {};
@@ -92,7 +93,7 @@ class EventForm extends PureComponent {
           />
         </div>
 
-        <button type="submit">Save</button>
+        <Button type="submit">Save</Button>
       </form>
     );
   }

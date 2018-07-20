@@ -23,6 +23,64 @@
 }
 
 @keyframes App-logo-spin {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+.eventCard {
+  display: flex !important;
+  /* flex-wrap: wrap !important; */
+  width: 20rem;
+  height: 5rem;
+}
+.pictureEvent {
+  height: 5rem;
+  width: 5rem;
+}
+.cardWrapper {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+.pageContainer {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+}
+
+.allListContainer {
+  width: 20rem;
+  height: 20rem;
+}
+
+.creatNew {
+  margin-top: 5rem;
+  padding: 2rem;
+}
+.generalContainerCenter {
+  display: flex;
+  justify-content: center;
+}
+.dikgedrukt {
+  font-size: 18px;
+  font-weight: bold;
+  padding-right: 1rem;
+}
+.displayCenter {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.bigFont {
+  font-size: 30px;
+  font-weight: bold;
+}
+
+.mediumFont {
+  font-size: 25px;
+  font-weight: bold;
 }

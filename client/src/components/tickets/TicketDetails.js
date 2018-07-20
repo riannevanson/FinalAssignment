@@ -10,6 +10,7 @@ import {
 import TicketForm from "./TicketForm";
 import CommentsList from "./CommentsList";
 import RiskCalculator from "./RiskCalculator";
+import Button from "material-ui/Button";
 
 class TicketDetails extends PureComponent {
   state = {
@@ -43,28 +44,28 @@ class TicketDetails extends PureComponent {
     if (!ticket) return null;
     return (
       <div>
-        {this.state.edit && (
-          <TicketForm initialValues={ticket} onSubmit={this.updateTicket} />
-        )}
-        {!this.state.edit && (
-          <div>
-            <h1>{ticket.name}</h1>'hi i am an ticket'
-            <p> {ticket.description}</p>
-          </div>
-        )}
-        <button onClick={() => this.toggleEdit(ticket.id)}>Edit ticket</button>
-        <button onClick={() => this.deleteThisTicket(ticket.id)}>
-          Remove ticket
-        </button>
-        <br />
-        <br /> <br />
-        <CommentsList />
-        <br />
-        <br /> <br />
-        <RiskCalculator
-          currentTicket={ticket}
-          ticketId={this.props.match.params.ticketId}
-        />
+        <div className="displayCenter">
+          {this.state.edit && (
+            <TicketForm initialValues={ticket} onSubmit={this.updateTicket} />
+          )}
+          {!this.state.edit && (
+            <div className="displayCenter">
+              <div className="bigFont">Ticketname: {ticket.name}</div>
+              <div> Desciption: {ticket.description}</div>
+              <div className="mediumFont">
+                <RiskCalculator
+                  currentTicket={ticket}
+                  ticketId={this.props.match.params.ticketId}
+                />
+              </div>
+            </div>
+          )}
+          <Button onClick={() => this.toggleEdit(ticket.id)}>
+            Edit ticket
+          </Button>
+          <br /> <br />
+          <CommentsList />
+        </div>
       </div>
     );
   }
