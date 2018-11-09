@@ -1,29 +1,48 @@
-export const numberTicketsAuthorRisk = numberTicketsAuthor => {
-  if (numberTicketsAuthor < 2) {
+import { totalmem } from "os";
+
+const numberTicketsAuthor = tickets.userId.length;
+
+const numberTicketsAuthorRisk = numberTicketsAuthor => {
+  if (numberTicketsAuthor > 1) {
     return 10;
   } else {
     return 0;
   }
 };
 
-export const averagePriceRisk = (averagePriceTicket, currentTicketPrice) => {
-  if (averagePriceTicket > currentTicketPrice)
-    return 100 - (currentTicketPrice / averagePriceTicket) * 100;
+const AveragePriceTicket =
+  ticket.price.reducereduce((total, score) => total + score) / scores.length;
 
-  const expensivePrice = 100 - (averagePriceTicket / currentTicketPrice) * 100;
+const ticketPrice = ticket.price;
 
-  return expensivePrice > 10 ? -10 : -expensivePrice;
+const averagePriceRisk = (AveragePriceTicket, ticketPrice) => {
+  if (AveragePriceTicket > ticketPrice) {
+    return ticketPrice - AveragePriceTicket;
+  } else {
+    return ticketPrice - AveragePriceTicket;
+  }
+};
+const time = ticket.timestamp + 2;
+
+const timeAddedRisk = time => {
+  if (time > 0900 && time > 1700) {
+    return -10;
+  } else {
+    return 10;
+  }
 };
 
-export const timeAddedRisk = timestampHour => {
-  return timestampHour > 9 && timestampHour < 17 ? -10 : 10;
+const numberOfComments = tickets.comments.length;
+
+const commentRisk = numberOfComments => {
+  if (numberOfComments > 3) {
+    return 5;
+  } else {
+    return 0;
+  }
 };
 
-export const commentRisk = numberOfComments => {
-  return numberOfComments > 3 ? 5 : 0;
-};
-
-export const countedRisk = (
+const countedRisk = (
   numberTicketsAuthorRisk,
   averagePriceRisk,
   timeAddedRisk,
@@ -34,9 +53,12 @@ export const countedRisk = (
   );
 };
 
-export const finalRisk = countedRisk => {
-  if (countedRisk > 95) return 95;
-  if (countedRisk < 5) return 5;
-
-  return countedRisk;
+const finalRisk = countedRisk => {
+  if (countedRisk > 95) {
+    return 95;
+  } else if (countedRisk < 5) {
+    return 5;
+  } else {
+    return countedRisk;
+  }
 };

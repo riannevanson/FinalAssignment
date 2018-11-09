@@ -5,61 +5,67 @@ import {
   fetchAllCommentsFromTicketId,
   createComment
 } from "../../actions/comments";
-import { fetchAllTickets } from "../../actions/tickets";
+import {
+  fetchAllTicketsFromEventId,
+  createTicket
+} from "../../actions/tickets";
 import { Link } from "react-router-dom";
 import CommentForm from "./CommentForm";
 import { fetchEvent, updateEvent, deleteEvent } from "../../actions/events";
-import Card from "@material-ui/core/Card";
 
 class CommentsList extends PureComponent {
   componentWillMount() {
-    this.props.fetchAllCommentsFromTicketId(this.props.ticket.id);
+    //   this.props.fetchAllTicketsFromEventId(this.props.match.params.id);
+    // this.props.fetchAllCommentsFromTicketId(this.props.match.params.id);
   }
-
-  createNewComment = comment => {
-    this.props.createComment(this.props.ticket.id, comment);
+  createNewComment = (comment, eventId) => {
+    this.props.createComment(comment, eventId);
   };
 
   render() {
-    const { comments, ticket } = this.props;
-    let ticketComments = comments.filter(
-      comment => comment.ticket !== undefined && comment.ticket.id === ticket.id
+    const { comments, event } = this.props;
+    console.log(event, "event");
+    let eventComments = comments.filter(
+      comment => comment.event !== undefined && comment.event.id === event.id
     );
-
-    const ticketUserId = ticket.user !== undefined ? ticket.user.id : 0;
 
     return (
       <div>
+        <p>Welcome</p>
+
         {!this.props.currentUser && (
           <p>
             Please <Link to="/login">login</Link>
           </p>
         )}
+        <div>
+          <h1>{event.name}</h1>
+          <p> {event.description}</p>
+        </div>
+        <div>
+          <h1>All comments for this ticket</h1>
 
-        <div className="pageContainer">
-          <div className="displayCenter">
-            <div className="bigFont">All comments for this ticket</div>
+          <table>
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>user</th>
+              </tr>
+            </thead>
+            <tbody>
+              {eventComments.map(comment => (
+                <tr key={comment.id}>
+                  <td>{comment.id}</td>
+                  <td>
+                    <Link to={`comments/${comment.id}`}>{comment.comment}</Link>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+          <h1>Create a new comment</h1>
 
-            <div>
-              <tbody>
-                {ticketComments.map(comment => (
-                  <Card className="eventCard " key={comment.id}>
-                    <div className="dikgedrukt">{comment.user.firstName}</div>
-                    <div>said "{comment.comment}"</div>
-                  </Card>
-                ))}
-              </tbody>
-            </div>
-          </div>
-          {1 && (
-            <div className=".creatNew">
-              <h1>Create a new comment</h1>
-              <CommentForm
-                onSubmit={this.createNewComment}
-                ticket={ticket.id}
-              />
-            </div>
-          )}
+          <CommentForm onSubmit={this.createNewComment} event={event.id} />
         </div>
       </div>
     );
@@ -70,18 +76,19 @@ const mapStateToProps = function(state) {
   return {
     comments: state.comments,
     currentUser: state.currentUser,
-    ticket: state.ticket
+    event: state.event
   };
 };
 
 export default connect(
   mapStateToProps,
   {
+    // fetchAllComments,
     createComment,
     fetchEvent,
     updateEvent,
     deleteEvent,
     fetchAllCommentsFromTicketId,
-    fetchAllTickets
+    fetchAllTicketsFromEventId
   }
 )(CommentsList);

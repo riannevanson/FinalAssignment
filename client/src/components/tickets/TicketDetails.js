@@ -1,16 +1,8 @@
 import React, { PureComponent } from "react";
 
 import { connect } from "react-redux";
-import {
-  fetchTicket,
-  updateTicket,
-  deleteTicket,
-  fetchAllTickets
-} from "../../actions/tickets";
+import { fetchTicket, updateTicket, deleteTicket } from "../../actions/tickets";
 import TicketForm from "./TicketForm";
-import CommentsList from "./CommentsList";
-import RiskCalculator from "./RiskCalculator";
-import Button from "material-ui/Button";
 
 class TicketDetails extends PureComponent {
   state = {
@@ -18,8 +10,7 @@ class TicketDetails extends PureComponent {
   };
 
   componentWillMount(props) {
-    this.props.fetchTicket(this.props.match.params.ticketId);
-    this.props.fetchAllTickets(0);
+    this.props.fetchTicket(this.props.match.params.id);
   }
 
   toggleEdit = () => {
@@ -29,9 +20,7 @@ class TicketDetails extends PureComponent {
   };
 
   updateTicket = ticket => {
-    const ticketId = this.props.match.params.ticketId;
-    const eventId = this.props.match.params.id;
-    this.props.updateTicket(ticket, ticketId, eventId);
+    this.props.updateTicket(this.props.match.params.id, ticket);
     this.toggleEdit();
   };
 
@@ -44,28 +33,22 @@ class TicketDetails extends PureComponent {
     if (!ticket) return null;
     return (
       <div>
-        <div className="displayCenter">
-          {this.state.edit && (
-            <TicketForm initialValues={ticket} onSubmit={this.updateTicket} />
-          )}
-          {!this.state.edit && (
-            <div className="displayCenter">
-              <div className="bigFont">Ticketname: {ticket.name}</div>
-              <div> Desciption: {ticket.description}</div>
-              <div className="mediumFont">
-                <RiskCalculator
-                  currentTicket={ticket}
-                  ticketId={this.props.match.params.ticketId}
-                />
-              </div>
-            </div>
-          )}
-          <Button onClick={() => this.toggleEdit(ticket.id)}>
-            Edit ticket
-          </Button>
-          <br /> <br />
-          <CommentsList />
-        </div>
+        {this.state.edit && (
+          <TicketForm initialValues={ticket} onSubmit={this.updateTicket} />
+        )}
+
+        {!this.state.edit && (
+          <div>
+            <h1>{ticket.name}</h1>
+            <p> {ticket.description}</p>
+          </div>
+        )}
+
+        <button>Buy this ticket</button>
+        <button onClick={() => this.toggleEdit(ticket.id)}>EDIT EVENT</button>
+        <button onClick={() => this.deleteThisTicket(ticket.id)}>
+          Remove product
+        </button>
       </div>
     );
   }
@@ -78,5 +61,5 @@ const mapStateToProps = function(state, props) {
 
 export default connect(
   mapStateToProps,
-  { fetchTicket, updateTicket, deleteTicket, fetchAllTickets }
+  { fetchTicket, updateTicket, deleteTicket }
 )(TicketDetails);

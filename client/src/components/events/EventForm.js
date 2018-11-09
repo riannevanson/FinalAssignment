@@ -1,5 +1,4 @@
 import React, { PureComponent } from "react";
-import Button from "material-ui/Button";
 
 class EventForm extends PureComponent {
   state = {};
@@ -66,7 +65,6 @@ class EventForm extends PureComponent {
         <div>
           <label htmlFor="startDate">startDate</label>
           <input
-            type="date"
             name="startDate"
             id="startDate"
             value={
@@ -81,7 +79,6 @@ class EventForm extends PureComponent {
         <div>
           <label htmlFor="endDate">endDate</label>
           <input
-            type="date"
             name="endDate"
             id="endDate"
             value={
@@ -93,7 +90,7 @@ class EventForm extends PureComponent {
           />
         </div>
 
-        <Button type="submit">Save</Button>
+        <button type="submit">Save</button>
       </form>
     );
   }

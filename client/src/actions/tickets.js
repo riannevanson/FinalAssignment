@@ -7,6 +7,8 @@ export const FETCHED_ALL_TICKETS = "FETCHED_ALL_TICKETS";
 export const CREATE_TICKET = "CREATE_TICKET";
 export const REMOVE_TICKET = "REMOVE_TICKET";
 export const UPDATE_TICKET = "UPDATE_TICKET";
+export const FETCHED_ALL_TICKETS_FROM_EVENT_ID =
+  "FETCHED_ALL_TICKETS_FROM_EVENT_ID";
 
 export const fetchTicket = ticketId => dispatch => {
   request
@@ -20,9 +22,25 @@ export const fetchTicket = ticketId => dispatch => {
     .catch(err => alert(err));
 };
 
-export const fetchAllTickets = eventId => dispatch => {
+export const fetchAllTicketsFromEventId = eventId => dispatch => {
   request
     .get(`${baseUrl}/events/${eventId}/tickets`)
+    .then(response =>
+      dispatch({
+        type: FETCHED_ALL_TICKETS_FROM_EVENT_ID,
+        payload: response.body.tickets
+      })
+    )
+    .catch(err => alert(err));
+
+  // ... implement!
+  // Hint: make sure to use json.tickets and not json as payload,
+  // because you send back an envelope! (so response.body.tickets)
+};
+
+export const fetchAllTickets = () => dispatch => {
+  request
+    .get(`${baseUrl}/tickets`)
     .then(response =>
       dispatch({
         type: FETCHED_ALL_TICKETS,
@@ -35,22 +53,6 @@ export const fetchAllTickets = eventId => dispatch => {
   // Hint: make sure to use json.tickets and not json as payload,
   // because you send back an envelope! (so response.body.tickets)
 };
-
-// export const fetchAllTickets = () => dispatch => {
-//   request
-//     .get(`${baseUrl}/tickets`)
-//     .then(response =>
-//       dispatch({
-//         type: FETCHED_ALL_TICKETS,
-//         payload: response.body.tickets
-//       })
-//     )
-//     .catch(err => alert(err));
-
-//   // ... implement!
-//   // Hint: make sure to use json.tickets and not json as payload,
-//   // because you send back an envelope! (so response.body.tickets)
-// };
 
 export const createTicket = (ticket, eventId) => (dispatch, getState) => {
   const state = getState();
@@ -86,15 +88,12 @@ export const deleteTicket = ticketId => (dispatch, getState) => {
     });
 };
 
-export const updateTicket = (updates, ticketId, eventId) => (
-  dispatch,
-  getState
-) => {
+export const updateTicket = (ticketId, updates) => (dispatch, getState) => {
   const state = getState();
   const jwt = state.currentUser.jwt;
 
   request
-    .put(`${baseUrl}/events/${eventId}/tickets/${ticketId}`)
+    .put(`${baseUrl}/tickets/${ticketId}`)
     .set("Authorization", `Bearer ${jwt}`)
     .send(updates)
     .then(response => {

@@ -3,7 +3,6 @@ import React, { PureComponent } from "react";
 import { connect } from "react-redux";
 import { fetchEvent, updateEvent, deleteEvent } from "../../actions/events";
 import EventForm from "./EventForm";
-import { Button } from "../../../node_modules/material-ui";
 
 class EventDetails extends PureComponent {
   state = {
@@ -11,7 +10,7 @@ class EventDetails extends PureComponent {
   };
 
   componentWillMount(props) {
-    // this.props.fetchEvent(this.props.match.params.id);
+    this.props.fetchEvent(this.props.match.params.id);
   }
 
   toggleEdit = () => {
@@ -33,23 +32,23 @@ class EventDetails extends PureComponent {
     const { event } = this.props;
     if (!event) return null;
     return (
-      <div className="generalContainerCenter">
+      <div>
         {this.state.edit && (
-          <EventForm
-            initialValues={event}
-            //    initialValuesPicture="http://www.youthincmag.com/wp-content/uploads/2016/07/musicfestival1.jpg"
-            onSubmit={this.updateEvent}
-          />
+          <EventForm initialValues={event} onSubmit={this.updateEvent} />
         )}
 
         {!this.state.edit && (
           <div>
-            <h1>Eventname: {event.name}</h1>
-            <p>Description: {event.description}</p>
+            <h1>{event.name}</h1>
+            <p> {event.description}</p>
           </div>
         )}
 
-        <Button onClick={() => this.toggleEdit(event.id)}>EDIT EVENT</Button>
+        <button>Buy this event</button>
+        <button onClick={() => this.toggleEdit(event.id)}>EDIT EVENT</button>
+        <button onClick={() => this.deleteThisEvent(event.id)}>
+          Remove product
+        </button>
       </div>
     );
   }

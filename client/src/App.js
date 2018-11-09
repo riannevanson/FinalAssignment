@@ -3,11 +3,11 @@ import { BrowserRouter as Router, Route, Redirect } from "react-router-dom";
 import LoginPage from "./components/login/LoginPage";
 import SignupPage from "./components/signup/SignupPage";
 import EventsList from "./components/events/EventsList";
-// import EventDetails from "./components/events/EventDetails";
+import EventDetails from "./components/events/EventDetails";
 import LogoutPage from "./components/logout/LogoutPage";
 import "./App.css";
 import TopBar from "./components/layout/TopBar";
-import EventAndTicketsList from "./components/tickets/EventAndTicketsList";
+import TicketsList from "./components/tickets/TicketsList";
 import TicketDetails from "./components/tickets/TicketDetails";
 import CommentsList from "./components/tickets/CommentsList";
 
@@ -28,21 +28,17 @@ class App extends Component {
             <Route exact path="/logout" component={LogoutPage} />
             <Route exact path="/signup" component={SignupPage} />
             <Route exact path="/events" component={EventsList} />
-            {/* <Route exact path="/events/:id" component={EventDetails} /> */}
+            <Route exact path="/events/:id" component={EventDetails} />
+            <Route exact path="/events/:id/tickets" component={TicketsList} />
             <Route
               exact
-              path="/events/:id/tickets"
-              component={EventAndTicketsList}
-            />
-            <Route
-              exact
-              path="/events/:id/tickets/:ticketId"
+              path="/events/:id/tickets/:id"
               component={TicketDetails}
             />
             <Route exact path="/" render={() => <Redirect to="/events" />} />
             <Route
               exact
-              path="/tickets/:ticketId/comments"
+              path="/events/:id/tickets/:id/:ticketid/comments"
               component={CommentsList}
             />
           </main>

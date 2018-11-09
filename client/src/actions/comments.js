@@ -10,21 +10,21 @@ export const UPDATE_COMMENT = "UPDATE_COMMENT";
 export const FETCHED_ALL_COMMENTS_FROM_EVENT_ID =
   "FETCHED_ALL_COMMENTS_FROM_EVENT_ID";
 
-// export const fetchComment = () => dispatch => {
-//   request
-//     .get(`${baseUrl}/tickets/${ticketId}/comments/${commentId}`)
-//     .then(response =>
-//       dispatch({
-//         type: FETCHED_DETAILED_COMMENT,
-//         payload: response.body
-//       })
-//     )
-//     .catch(err => alert(err));
-// };
-
-export const fetchAllCommentsFromTicketId = ticketId => dispatch => {
+export const fetchComment = commentId => dispatch => {
   request
-    .get(`${baseUrl}/tickets/${ticketId}/comments`)
+    .get(`${baseUrl}/comments/${commentId}`)
+    .then(response =>
+      dispatch({
+        type: FETCHED_DETAILED_COMMENT,
+        payload: response.body
+      })
+    )
+    .catch(err => alert(err));
+};
+
+export const fetchAllCommentsFromTicketId = (eventId, ticketId) => dispatch => {
+  request
+    .get(`${baseUrl}/events/${eventId}/tickets/${ticketId}/comments`)
     .then(response =>
       dispatch({
         type: FETCHED_ALL_COMMENTS_FROM_EVENT_ID,
@@ -54,12 +54,13 @@ export const fetchAllCommentsFromTicketId = ticketId => dispatch => {
 //   // because you send back an envelope! (so response.body.comments)
 // };
 
-export const createComment = (ticketId, comment) => (dispatch, getState) => {
+export const createComment = (comment, eventId) => (dispatch, getState) => {
   const state = getState();
   const jwt = state.currentUser.jwt;
+  console.log(eventId, "eventId in action");
 
   request
-    .post(`${baseUrl}/tickets/${ticketId}/comments`)
+    .post(`${baseUrl}/events/${eventId}/comments`)
     .set("Authorization", `Bearer ${jwt}`)
     .send(comment)
     .then(response =>

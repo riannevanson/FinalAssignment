@@ -4,9 +4,8 @@ class TicketForm extends PureComponent {
   state = {};
 
   handleSubmit = e => {
-    e.preventDefault();
-    this.props.onSubmit(this.state, this.props.event);
-    // console.log(this.props.event, "event in form");
+    e.prticketDefault();
+    this.props.onSubmit(this.state);
   };
 
   handleChange = ticket => {
@@ -18,8 +17,7 @@ class TicketForm extends PureComponent {
   };
 
   render() {
-    const initialValues = this.props.initialValues || {}; // todo consolelog
-
+    const initialValues = this.props.initialValues || {};
     return (
       <form onSubmit={this.handleSubmit}>
         <div>
@@ -33,7 +31,6 @@ class TicketForm extends PureComponent {
                 : initialValues.name
             }
             onChange={this.handleChange}
-            type="text"
           />
         </div>
 
@@ -48,7 +45,6 @@ class TicketForm extends PureComponent {
                 : initialValues.pictureUrl
             }
             onChange={this.handleChange}
-            type="text"
           />
         </div>
 
@@ -63,22 +59,34 @@ class TicketForm extends PureComponent {
                 : initialValues.description
             }
             onChange={this.handleChange}
-            type="text"
           />
         </div>
 
         <div>
-          <label htmlFor="price">price</label>
+          <label htmlFor="startDate">startDate</label>
           <input
-            name="price"
-            id="price"
+            name="startDate"
+            id="startDate"
             value={
-              this.state.price !== undefined
-                ? this.state.price
-                : initialValues.price
+              this.state.startDate !== undefined
+                ? this.state.startDate
+                : initialValues.startDate
             }
             onChange={this.handleChange}
-            type="integer"
+          />
+        </div>
+
+        <div>
+          <label htmlFor="endDate">endDate</label>
+          <input
+            name="endDate"
+            id="endDate"
+            value={
+              this.state.endDate !== undefined
+                ? this.state.endDate
+                : initialValues.endDate
+            }
+            onChange={this.handleChange}
           />
         </div>
 
