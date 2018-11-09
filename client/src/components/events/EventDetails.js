@@ -59,7 +59,7 @@ const mapStateToProps = function(state, props) {
     event: state.event
   };
 };
-
+////
 export default connect(
   mapStateToProps,
   { fetchEvent, updateEvent, deleteEvent }
