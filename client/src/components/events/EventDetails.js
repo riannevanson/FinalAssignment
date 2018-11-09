@@ -35,7 +35,11 @@ class EventDetails extends PureComponent {
     return (
       <div className="generalContainerCenter">
         {this.state.edit && (
-          <EventForm initialValues={event} onSubmit={this.updateEvent} />
+          <EventForm
+            initialValues={event}
+            //    initialValuesPicture="http://www.youthincmag.com/wp-content/uploads/2016/07/musicfestival1.jpg"
+            onSubmit={this.updateEvent}
+          />
         )}
 
         {!this.state.edit && (
