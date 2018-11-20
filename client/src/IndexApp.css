@@ -1,4 +1,62 @@
-.welcome {
-  color: red; }
-  .welcome--home {
-    background: gray; }
+h1 {
+  margin: 0;
+  padding: 0;
+  font-size: 3rem; }
+
+h2 {
+  margin: 0;
+  padding: 0;
+  font-size: 2.5rem; }
+
+h3 {
+  margin: 0;
+  padding: 0;
+  font-size: 1.2rem; }
+
+h4 {
+  margin: 0;
+  padding: 0;
+  font-size: 1rem; }
+
+h5 {
+  margin: 0;
+  padding: 0;
+  font-size: 0.8rem; }
+
+body {
+  overflow-x: hidden; }
+
+.pageWrapperBody {
+  display: flex; }
+
+.allEventsWrapper {
+  width: 42rem;
+  margin-left: auto;
+  margin-right: 10rem; }
+
+.eventCardTable {
+  width: 42rem;
+  margin-left: auto;
+  margin-right: 10rem;
+  display: grid;
+  grid-template-columns: auto auto; }
+
+.card {
+  width: 20rem;
+  height: 7rem;
+  margin: 0.5rem;
+  display: flex;
+  flex-direction: row;
+  background-color: chocolate; }
+
+.card:nth-child(even) {
+  flex-direction: row-reverse; }
+
+.card--Img {
+  width: 7rem;
+  height: 7rem; }
+
+.card--event--txtWrapper {
+  word-wrap: break-word;
+  margin: auto 2rem;
+  width: 13rem; }

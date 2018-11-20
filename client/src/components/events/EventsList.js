@@ -25,7 +25,7 @@ class EventsList extends PureComponent {
 
     return (
       <div>
-        <p>Welcome</p>
+        <p>Welcome here you can see all events</p>
 
         {!this.props.currentUser && (
           <p>
@@ -33,33 +33,32 @@ class EventsList extends PureComponent {
           </p>
         )}
 
-        <div>
-          <h1>All events</h1>
+        <div className="pageWrapperBody">
+          <div className="createEventWrapper">
+            <h1>Create a new event</h1>
 
-          <table>
-            <thead>
-              <tr>
-                <th>#</th>
-                <th>Name</th>
-                <th>Picture</th>
-              </tr>
-            </thead>
-            <tbody>
+            <EventForm onSubmit={this.createNewEvent} className="eventFormwrapper"/>
+          </div>
+
+          <div className="allEventsWrapper">
+            <h1>All events</h1>
+            <div className="eventCardTable">
               {events.map(event => (
-                <tr key={event.id}>
-                  <td>{event.id}</td>
-                  <td>
-                    <Link to={`/events/${event.id}/tickets`}>{event.name}</Link>
-                  </td>
-
-                  <td>{event.pictureUrl}</td>
-                </tr>
+                <div key={event.id} className="card">
+                  <img className="card--Img" src={event.pictureUrl} />
+                  <div ey={event.id} className="card--event--txtWrapper">
+                    <h3>{event.name}</h3>
+                    <h4>{event.description}</h4>
+                    <h4>
+                      <Link to={`/events/${event.id}/tickets`}>
+                        ga naar dit event >
+                      </Link>
+                    </h4>
+                  </div>
+                </div>
               ))}
-            </tbody>
-          </table>
-          <h1>Create a new event</h1>
-
-          <EventForm onSubmit={this.createNewEvent} />
+            </div>
+          </div>
         </div>
       </div>
     );
