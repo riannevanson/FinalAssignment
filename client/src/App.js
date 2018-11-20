@@ -6,6 +6,7 @@ import EventsList from "./components/events/EventsList";
 // import EventDetails from "./components/events/EventDetails";
 import LogoutPage from "./components/logout/LogoutPage";
 import "./App.css";
+import "./IndexApp.scss";
 import TopBar from "./components/layout/TopBar";
 import TicketsList from "./components/tickets/TicketsList";
 import TicketDetails from "./components/tickets/TicketDetails";
@@ -41,7 +42,10 @@ class App extends Component {
               path="/tickets/:ticketId/comments"
               component={CommentsList}
             />
+            
           </main>
+      
+
         </div>
       </Router>
     );
