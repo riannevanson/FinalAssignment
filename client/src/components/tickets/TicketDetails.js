@@ -48,8 +48,9 @@ class TicketDetails extends PureComponent {
         )}
         {!this.state.edit && (
           <div>
-            <h1>{ticket.name}</h1>'hi i am an ticket'
+            <h1>{ticket.name}</h1>
             <p> {ticket.description}</p>
+            <p> &euro; {ticket.price}</p>
           </div>
         )}
         <button onClick={() => this.toggleEdit(ticket.id)}>Edit ticket</button>
